@@ -3,77 +3,74 @@
     --section-padding: 20px; /* Adjusted padding for closer edge alignment */
     --border-width: 0.5px; /* Thinner borders for a subtle look */
     --border-radius: 0; /* No border-radius for a sharp box appearance */
+    --background-color: #f8f8f8; /* Default light background */
+    --box-background-color: #f8f8f8; /* Default box background color for light theme */
+    --text-color: #000000; /* Default text color for readability */
+    --accent-color: #ffcc00; /* Default accent color */
+    --border-color: #a0a0a0; /* Default border color for definition */
 }
 
-/* Light theme colors */
+/* Theme colors */
 .light-theme {
-    --background-color: #f8f8f8; /* Light background to match box fill */
-    --box-background-color: #f8f8f8; /* Dark grey boxes for contrast */
-    --text-color: #000000; /* Black text for readability */
-    --accent-color: #ffcc00; /* Yellow accent color */
-    --border-color: #a0a0a0; /* Dark grey borders for definition */
+    --background-color: #f8f8f8;
+    --box-background-color: #f8f8f8;
+    --text-color: #000000;
+    --accent-color: #ffcc00;
+    --border-color: #a0a0a0;
 }
 
-/* Medium theme colors */
 .medium-theme {
-    --background-color: #999999; /* Medium gray background to match box fill */
-    --box-background-color: #999999; /* Grey boxes, for a slight contrast */
-    --text-color: #000000; /* Black text for clarity */
-    --accent-color: #ff8c00; /* Orange accent for vibrancy */
-    --border-color: #000000; /* Slightly darker grey borders for visibility */
+    --background-color: #c2cdd1;
+    --box-background-color: #c2cdd1;
+    --text-color: #000000;
+    --accent-color: #ff8c00;
+    --border-color: #000000;
 }
 
-.medium-theme .box {
-    border-color: var(--border-color);
-}
-
-/* Dark theme colors */
 .dark-theme {
-    --background-color: #252525; /* Dark background to match dark box fill */
-    --box-background-color: #252525; /* Matching dark boxes */
-    --text-color: #ffffff; /* White text for high contrast */
-    --accent-color: #007bff; /* Blue accent for a cool, modern touch */
-    --border-color: #454545; /* Very light grey borders for distinction */
+    --background-color: #252525;
+    --box-background-color: #252525;
+    --text-color: #ffffff;
+    --accent-color: #e02e2e;
+    --border-color: #454545;
 }
 
-.dark-theme body {
-    background-color: var(--background-color);
-}
-
-.dark-theme .box {
-    background-color: var(--box-background-color);
-}
-
-/* Applying theme colors using custom properties */
+/* General HTML and Body styles */
 html, body {
-    height: 100%; /* Ensure html and body span the full height */
-    margin: 0; /* Remove default margin */
-}
-
-body {
-    display: flex;
-    flex-direction: column; /* Stack content vertically */
+    height: 100%;
+    margin: 0;
+    padding: 0;
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: 'Orbitron', 'Arial', sans-serif;
     line-height: 1.6;
-    transition: background-color 0.3s, color 0.3s; /* Smooth transitions for theme changes */
+}
+
+/* Flex layout for body to structure header, main, and footer */
+body {
+    display: flex;
+    flex-direction: column;
 }
 
 header, footer {
-    flex-shrink: 0; /* Prevent header and footer from shrinking */
+    flex-shrink: 0;
 }
 
+/* Main content area */
 main {
-    flex-grow: 1; /* Allow main content to grow and fill available space */
     display: flex;
-    flex-direction: column; /* Stack sections vertically */
+    flex-direction: column;
+    flex-grow: 1;
 }
 
-section {
-    flex-grow: 1; /* Make each section grow equally to fill the container */
+/* Stretching sections within main */
+main > section {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Navigation styles */
 nav {
     display: flex;
     justify-content: space-between;
@@ -82,12 +79,12 @@ nav {
 }
 
 #theme-toggle-container {
-    margin-right: auto; /* This pushes the toggle button to the left */
+    margin-right: auto;
 }
 
 #nav-links-container {
     display: flex;
-    justify-content: flex-end; /* Aligns the nav items to the right */
+    justify-content: flex-end;
 }
 
 nav ul {
@@ -95,7 +92,7 @@ nav ul {
     display: flex;
     gap: 20px;
     padding: 0;
-    margin: 0; /* Removes default margin */
+    margin: 0;
 }
 
 nav ul li a {
@@ -112,17 +109,36 @@ button#theme-toggle {
     cursor: pointer;
 }
 
+
+.about-img-container {
+    height: 30vh; /* Set the height of the container to 25% of the viewport height */
+    width: 100%; /* Adjust the width as necessary, or set to 100% to fill the container */
+    background-image: url('img/office.webp'); /* Set the image as a background */
+    background-size: cover; /* Cover the container without losing the aspect ratio */
+    background-position: center; /* Center the background image */
+    overflow: hidden; /* Ensures any part of the image outside the container is not visible */
+}
+
+#about {
+    height: 30vh; /* Optional: Adjust this value based on how much of the viewport you want the section to cover */
+    background-image: url('img/office.webp'); /* Set the background image */
+    background-size: cover; /* Ensure the image covers the entire section */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the background image from repeating */
+}
+
+
 /* Section and article styles */
 section, article {
-    background-color: var(--box-background-color);
-    border: var(--border-width) solid var(--border-color);
     padding: var(--section-padding);
     margin-bottom: 20px;
     border-radius: var(--border-radius);
+    border: var(--border-width) solid var(--border-color);
+    background-color: var(--box-background-color);
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* Headings alignment */
+/* Heading styles */
 section > h1, section > h2, section > h3,
 article > h1, article > h2, article > h3 {
     color: var(--text-color);
@@ -133,11 +149,11 @@ article > h1, article > h2, article > h3 {
 
 /* Footer styles */
 footer {
-    background-color: var(--background-color);
     text-align: center;
-    color: var(--text-color);
     padding: var(--section-padding);
     border-top: var(--border-width) solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
 /* Responsive design adjustments */
@@ -147,37 +163,33 @@ footer {
         gap: 10px;
     }
 
-    header, main, footer {
-        padding: 0;
-    }
-
     button#theme-toggle {
         padding: 8px 16px;
     }
 }
 
-/* General Box Styling */
+/* Box styling for generic container elements */
 .box {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    background-color: var(--box-background-color);
     padding: 20px;
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
-    overflow: hidden;
+    background-color: var(--box-background-color);
     color: var(--text-color);
+    flex-grow: 1;
 }
 
-/* Blog Container Styling */
+/* Styling for blog and footer containers */
 .blog-container, .footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
 
-/* Footer Section Styling */
+/* Footer section styling */
 .footer-section {
     display: flex;
     flex-direction: column;
@@ -187,14 +199,14 @@ footer {
     background-color: var(--box-background-color);
 }
 
-/* Image Styling */
+/* Image styling for responsiveness */
 img {
     width: 100%;
     height: auto;
     margin-bottom: 20px;
 }
 
-/* Ensure boxes and images are responsive */
+/* Adjustments for smaller screens */
 @media (max-width: 1024px) {
     .blog-container, .footer {
         grid-template-columns: repeat(3, 1fr);
@@ -207,7 +219,7 @@ img {
     }
 }
 
-/* Footer adjustments */
+/* Additional footer adjustments */
 footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
