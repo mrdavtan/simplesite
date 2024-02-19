@@ -1,16 +1,11 @@
-
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Your existing server.js code continues here...
-
-
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
 import basicAuth from 'express-basic-auth';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = 3000;
@@ -18,13 +13,16 @@ const PORT = 3000;
 // Basic Authentication for the /admin route
 const adminAuth = basicAuth({
     users: { 'admin': 'password' }, // Replace 'password' with a strong password
-    challenge: true, // Causes browsers to show a login dialog
+    challenge: true,
     realm: 'Admin',
-    unauthorizedResponse: (req) => {
+    unauthorizedResponse: req => {
         console.log('Unauthorized access attempt to /admin');
         return 'Unauthorized';
     }
 });
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Middleware to serve static files from 'public'
 app.use(express.static('public'));
@@ -50,7 +48,6 @@ app.get('/home', async (req, res) => {
         });
 
         console.log(`Successfully loaded ${posts.length} posts.`);
-        // Assuming you have an EJS template named 'home.ejs' for displaying posts
         res.render('home', { posts });
     } catch (error) {
         console.error('Error fetching posts for /home:', error);
@@ -58,6 +55,5 @@ app.get('/home', async (req, res) => {
     }
 });
 
-// Start the server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
