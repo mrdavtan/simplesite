@@ -8,11 +8,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+// Middleware to parse JSON bodies
+app.use(express.json());
+const PORT = 3001;
 
 // Basic Authentication for the /admin route
 const adminAuth = basicAuth({
-    users: { 'admin': 'password' }, // Replace 'password' with a strong password
+    users: {
+        'admin': 'password'
+    }, // Replace 'password' with a strong password
     challenge: true,
     realm: 'Admin',
     unauthorizedResponse: req => {
@@ -33,25 +37,36 @@ app.get('/admin', adminAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Route to display blog posts on /home
-app.get('/home', async (req, res) => {
-    console.log('Fetching blog posts for /home');
+// Route to display blog posts on /main
+app.get('/main', async (req, res) => {
+    console.log('Fetching blog posts for /main');
     try {
         const blogDirectory = path.join(__dirname, 'blog');
-        const postFiles = fs.readdirSync(blogDirectory);
+        const postFiles = fs.readdirSync(blogDirectory).filter(file => file.endsWith('.json'));
         console.log(`Found ${postFiles.length} post files in the blog directory.`);
-
-        const posts = postFiles.map(file => {
+        const posts = postFiles.filter(file => file.endsWith('.json')).map(file => {
             const filePath = path.join(blogDirectory, file);
             const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' });
             return JSON.parse(fileContent);
         });
-
         console.log(`Successfully loaded ${posts.length} posts.`);
-        res.render('home', { posts });
+        res.render('main', { posts });
     } catch (error) {
-        console.error('Error fetching posts for /home:', error);
+        console.error('Error fetching posts for /main:', error);
         res.status(500).send('Error loading posts');
+    }
+});
+
+// Endpoint to handle blog post submissions
+app.post('/submit', async (req, res) => {
+    try {
+        const db = await getDbForPost(post); // Assuming getDbForPost is defined elsewhere
+        await db.write(post); // Corrected to pass the post object to the write method
+        console.log('Post saved:', post);
+        res.status(201).send('Post saved successfully');
+    } catch (error) {
+        console.error('Failed to save post:', error);
+        res.status(500).send('Failed to save post');
     }
 });
 

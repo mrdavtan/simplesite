@@ -1,0 +1,11 @@
+<!-- Your existing HTML content -->
+<div class="blog-container">
+  <% posts.forEach(function(post) { %>
+    <div class="post">
+      <h2><%= post.title %></h2>
+      <p><%= post.content %></p>
+    </div>
+  <% }); %>
+</div>
+<!-- More HTML content -->
+

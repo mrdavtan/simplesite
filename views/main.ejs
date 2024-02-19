@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Tang</title>
 
-    <link rel="stylesheet" href="reset_styles.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./reset_styles.css">
+    <link rel="stylesheet" href="./styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <script src="./scripts/loadPosts.js" defer></script>
+ <!--    <script src="./scripts/loadPosts.js" defer></script> -->
 
 </head>
 <body class="light-theme">
@@ -33,7 +33,7 @@
 
             <section id="about">
                 <h2>About</h2>
-                    <div class="hero-img-container" src="img/office.webp" alt="A description of the image"></div>
+                    <div class="hero-img-container" style="background-image: url('img/office.webp');" alt="A description of the image"></div>
 
                 <!-- Detailed about me/personal journey content goes here -->
             </section>
@@ -41,14 +41,7 @@
             <section id="Latest">
                 <h2>Latest</h2>
                     <div class="blog-container">
-                    <% posts.forEach(function(post) { %>
-                    <div class="box">
-                    <h3><%= post.title %></h3>
-                    <p><%= post.content %></p>
-                    <!-- Add more post details as needed -->
-                    </div>
-                    <% }); %>
-                    </div>
+                   </div>
             </section>
 
             <section id="projects">
