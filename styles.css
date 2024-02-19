@@ -42,7 +42,7 @@ html, body {
     padding: 0;
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: 'Orbitron', 'Arial', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     line-height: 1.6;
 }
 
@@ -228,3 +228,7 @@ footer {
     text-align: center;
 }
 
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}

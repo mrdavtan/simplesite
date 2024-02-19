@@ -10,13 +10,47 @@
     <form id="postForm">
         <input type="text" id="title" placeholder="Title" required><br>
         <textarea id="content" placeholder="Content" required></textarea><br>
+        <input type="date" id="publishedDate" placeholder="Published Date" required><br> <!-- Added date picker for publishedDate -->
         <input type="text" id="seoTitle" placeholder="SEO Title"><br>
         <input type="text" id="seoDescription" placeholder="SEO Description"><br>
         <input type="text" id="seoKeywords" placeholder="SEO Keywords"><br>
         <button type="submit">Submit</button>
     </form>
 
-    <script src="app.js"></script>
+    <script>
+        document.getElementById('postForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const publishedDate = document.getElementById('publishedDate').value; // Capture the publishedDate
+            const seoTitle = document.getElementById('seoTitle').value;
+            const seoDescription = document.getElementById('seoDescription').value;
+            const seoKeywords = document.getElementById('seoKeywords').value.split(','); // Assuming keywords are comma-separated
+
+            const post = { title, content, publishedDate, seoTitle, seoDescription, seoKeywords };
+
+            try {
+                const response = await fetch('/api/posts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(post),
+                });
+
+                if (response.ok) {
+                    console.log('Post added successfully');
+                    // Optionally clear the form or redirect the user
+                } else {
+                    console.error('Failed to add post');
+                    // Handle errors or notify the user
+                }
+            } catch (error) {
+                console.error('Error submitting post:', error);
+            }
+        });
+    </script>
 </body>
 </html>
 
