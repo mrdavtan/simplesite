@@ -22,6 +22,7 @@
     --accent-color: #ff8c00; /* Orange accent for vibrancy */
     --border-color: #000000; /* Slightly darker grey borders for visibility */
 }
+
 .medium-theme .box {
     border-color: var(--border-color);
 }
@@ -34,54 +35,44 @@
     --accent-color: #007bff; /* Blue accent for a cool, modern touch */
     --border-color: #454545; /* Very light grey borders for distinction */
 }
+
 .dark-theme body {
     background-color: var(--background-color);
 }
+
 .dark-theme .box {
     background-color: var(--box-background-color);
 }
 
 /* Applying theme colors using custom properties */
-body, button, input, select, textarea {
+html, body {
+    height: 100%; /* Ensure html and body span the full height */
+    margin: 0; /* Remove default margin */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Stack content vertically */
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: 'Orbitron', 'Arial', sans-serif;
     line-height: 1.6;
     transition: background-color 0.3s, color 0.3s; /* Smooth transitions for theme changes */
-    margin: 0 auto;
 }
-/*
-nav {
+
+header, footer {
+    flex-shrink: 0; /* Prevent header and footer from shrinking */
+}
+
+main {
+    flex-grow: 1; /* Allow main content to grow and fill available space */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--section-padding);
+    flex-direction: column; /* Stack sections vertically */
 }
 
-nav ul {
-    list-style-type: none;
-    display: flex;
-    gap: 20px;
-    padding: 0;
-    margin: 0;
+section {
+    flex-grow: 1; /* Make each section grow equally to fill the container */
 }
-
-nav ul li a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 600;
-}
-
-button#theme-toggle {
-    padding: 10px 20px;
-    margin-left: auto; /* This ensures the button aligns to the end
-    background: var(--accent-color);
-    color: var(--background-color);
-    border: none;
-    cursor: pointer;
-}
-
-*/
 
 nav {
     display: flex;
@@ -121,8 +112,6 @@ button#theme-toggle {
     cursor: pointer;
 }
 
-
-
 /* Section and article styles */
 section, article {
     background-color: var(--box-background-color);
@@ -133,7 +122,7 @@ section, article {
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* Headings alignment to the upper left */
+/* Headings alignment */
 section > h1, section > h2, section > h3,
 article > h1, article > h2, article > h3 {
     color: var(--text-color);
@@ -157,8 +146,6 @@ footer {
         flex-direction: column;
         gap: 10px;
     }
-
-
 
     header, main, footer {
         padding: 0;
