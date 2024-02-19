@@ -11,11 +11,20 @@ app.get('/api/posts', async (req, res) => {
 });
 
 // Route to add a new post
+
 app.post('/api/posts', async (req, res) => {
-  const post = req.body;
-  db.data.posts.push(post); // Add the new post to the array
-  await db.write(); // Persist changes to db.json
-  res.status(201).send(post);
+    console.log('Received post data:', req.body); // Log incoming post data
+
+    try {
+        await db.read();
+        db.data.posts.push(req.body);
+        await db.write();
+        console.log('Post saved successfully'); // Confirm post is saved
+        res.status(201).json({ message: 'Post added successfully.' });
+    } catch (error) {
+        console.error('Error saving post:', error); // Log errors if any
+        res.status(500).json({ message: 'Failed to add the post', error: error.toString() });
+    }
 });
 
 

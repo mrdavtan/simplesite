@@ -4,6 +4,8 @@ document.getElementById('postForm').addEventListener('submit', async function(e)
     const title = document.getElementById('title').value;
     const content = document.getElementById('content').value;
 
+    console.log('Sending post to server:', { title, content }); // Log data being sent
+
     const response = await fetch('/api/posts', {
         method: 'POST',
         headers: {
@@ -14,10 +16,8 @@ document.getElementById('postForm').addEventListener('submit', async function(e)
 
     if (response.ok) {
         console.log('Post added successfully');
-        // Optionally reset the form or give user feedback
     } else {
         console.error('Failed to add post');
-        // Handle errors or notify the user
     }
 });
 
