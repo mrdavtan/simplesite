@@ -41,7 +41,14 @@
             <section id="Latest">
                 <h2>Latest</h2>
                     <div class="blog-container">
-                   </div>
+                    <% posts.forEach(function(post) { %>
+                    <div class="box">
+                    <h3><%= post.title %></h3>
+                    <p><%= post.content %></p>
+                    <!-- Add more post details as needed -->
+                    </div>
+                    <% }); %>
+                    </div>
             </section>
 
             <section id="projects">
