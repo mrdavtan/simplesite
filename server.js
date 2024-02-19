@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
+import { getDbForPost } from './db/db.js'; // Import getDbForPost from db.js
 import { fileURLToPath } from 'url';
 import basicAuth from 'express-basic-auth';
 
@@ -59,12 +60,17 @@ app.get('/main', async (req, res) => {
 
 // Endpoint to handle blog post submissions
 app.post('/submit', async (req, res) => {
+    console.log('Submit endpoint hit'); // Diagnostic log
+    console.log('Received a submission request');
+    const post = req.body; // Extract post data from the request body
     try {
-        const db = await getDbForPost(post); // Assuming getDbForPost is defined elsewhere
-        await db.write(post); // Corrected to pass the post object to the write method
+        const db = await getDbForPost(post);
+    console.log('Attempting to save post:', post);
+        await db.write(post); // Assuming db.write() correctly saves the post object
         console.log('Post saved:', post);
         res.status(201).send('Post saved successfully');
     } catch (error) {
+    console.error('Error during post submission:', error);
         console.error('Failed to save post:', error);
         res.status(500).send('Failed to save post');
     }

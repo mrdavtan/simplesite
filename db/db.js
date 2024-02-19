@@ -1,10 +1,11 @@
+import { fileURLToPath } from 'url';
 // Import the required modules from lowdb and Node.js file system
 import { JSONFilePreset } from 'lowdb/node';
 import fs from 'fs';
 import path from 'path';
 
 // Define the directory where blog posts will be stored
-const blogDirectory = './blog';
+const blogDirectory = path.join(path.dirname(fileURLToPath(import.meta.url)), 'blog');
 
 // Ensure the blog directory exists
 if (!fs.existsSync(blogDirectory)) {
