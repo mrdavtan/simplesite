@@ -1,0 +1,231 @@
+/* Base styles for the website */
+:root {
+    --section-padding: 20px; /* Adjusted padding for closer edge alignment */
+    --border-width: 0.5px; /* Thinner borders for a subtle look */
+    --border-radius: 0; /* No border-radius for a sharp box appearance */
+}
+
+/* Light theme colors */
+.light-theme {
+    --background-color: #f8f8f8; /* Light background to match box fill */
+    --box-background-color: #f8f8f8; /* Dark grey boxes for contrast */
+    --text-color: #000000; /* Black text for readability */
+    --accent-color: #ffcc00; /* Yellow accent color */
+    --border-color: #a0a0a0; /* Dark grey borders for definition */
+}
+
+/* Medium theme colors */
+.medium-theme {
+    --background-color: #999999; /* Medium gray background to match box fill */
+    --box-background-color: #999999; /* Grey boxes, for a slight contrast */
+    --text-color: #000000; /* Black text for clarity */
+    --accent-color: #ff8c00; /* Orange accent for vibrancy */
+    --border-color: #000000; /* Slightly darker grey borders for visibility */
+}
+.medium-theme .box {
+    border-color: var(--border-color);
+}
+
+/* Dark theme colors */
+.dark-theme {
+    --background-color: #252525; /* Dark background to match dark box fill */
+    --box-background-color: #252525; /* Matching dark boxes */
+    --text-color: #ffffff; /* White text for high contrast */
+    --accent-color: #007bff; /* Blue accent for a cool, modern touch */
+    --border-color: #454545; /* Very light grey borders for distinction */
+}
+.dark-theme body {
+    background-color: var(--background-color);
+}
+.dark-theme .box {
+    background-color: var(--box-background-color);
+}
+
+/* Applying theme colors using custom properties */
+body, button, input, select, textarea {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: 'Orbitron', 'Arial', sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions for theme changes */
+    margin: 0 auto;
+}
+/*
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--section-padding);
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+button#theme-toggle {
+    padding: 10px 20px;
+    margin-left: auto; /* This ensures the button aligns to the end
+    background: var(--accent-color);
+    color: var(--background-color);
+    border: none;
+    cursor: pointer;
+}
+
+*/
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--section-padding);
+}
+
+#theme-toggle-container {
+    margin-right: auto; /* This pushes the toggle button to the left */
+}
+
+#nav-links-container {
+    display: flex;
+    justify-content: flex-end; /* Aligns the nav items to the right */
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0; /* Removes default margin */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+button#theme-toggle {
+    padding: 10px 20px;
+    background: var(--accent-color);
+    color: var(--background-color);
+    border: none;
+    cursor: pointer;
+}
+
+
+
+/* Section and article styles */
+section, article {
+    background-color: var(--box-background-color);
+    border: var(--border-width) solid var(--border-color);
+    padding: var(--section-padding);
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Headings alignment to the upper left */
+section > h1, section > h2, section > h3,
+article > h1, article > h2, article > h3 {
+    color: var(--text-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+/* Footer styles */
+footer {
+    background-color: var(--background-color);
+    text-align: center;
+    color: var(--text-color);
+    padding: var(--section-padding);
+    border-top: var(--border-width) solid var(--border-color);
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+
+
+    header, main, footer {
+        padding: 0;
+    }
+
+    button#theme-toggle {
+        padding: 8px 16px;
+    }
+}
+
+/* General Box Styling */
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: var(--box-background-color);
+    padding: 20px;
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    color: var(--text-color);
+}
+
+/* Blog Container Styling */
+.blog-container, .footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Footer Section Styling */
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: var(--box-background-color);
+}
+
+/* Image Styling */
+img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+/* Ensure boxes and images are responsive */
+@media (max-width: 1024px) {
+    .blog-container, .footer {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-container, .footer {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Footer adjustments */
+footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: var(--box-background-color);
+    border-top: 1px solid #ccc;
+    text-align: center;
+}
+
