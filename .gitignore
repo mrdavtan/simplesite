@@ -1,0 +1,7 @@
+node_modules/
+package-lock.json
+# Assuming you have any sensitive configurations or build artifacts
+.env
+/dist
+/build
+
