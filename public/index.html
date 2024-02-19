@@ -3,51 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Blog Post</title>
+    <title>Your Blog</title>
+
+    <link rel="stylesheet" href="../reset_styles.css">
+    <link rel="stylesheet" href="./style.css"> <!-- Ensure this path is correct -->
 </head>
-<body>
-    <h1>Create a New Blog Post</h1>
-    <form id="postForm">
-        <input type="text" id="title" placeholder="Title" required><br>
-        <textarea id="content" placeholder="Content" required></textarea><br>
-        <input type="date" id="publishedDate" placeholder="Published Date" required><br> <!-- Added date picker for publishedDate -->
-        <input type="text" id="seoTitle" placeholder="SEO Title"><br>
-        <input type="text" id="seoDescription" placeholder="SEO Description"><br>
-        <input type="text" id="seoKeywords" placeholder="SEO Keywords"><br>
-        <button type="submit">Submit</button>
-    </form>
+<body class="light-theme" data-theme="light-theme">
+    <header>
+        <!-- Header content -->
+        <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
+    </header>
+
+    <main>
+        <h1>Create a New Blog Post</h1>
+        <div class="form-container">
+            <form id="postForm">
+                <input type="text" id="title" placeholder="Title" required><br>
+                <textarea id="content" placeholder="Content" required></textarea><br>
+                <input type="date" id="publishedDate" placeholder="Published Date" required><br>
+                <input type="text" id="seoTitle" placeholder="SEO Title"><br>
+                <input type="text" id="seoDescription" placeholder="SEO Description"><br>
+                <input type="text" id="seoKeywords" placeholder="SEO Keywords"><br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </main>
 
     <script>
         document.getElementById('postForm').addEventListener('submit', async function(e) {
-            e.preventDefault(); // Prevent the default form submission
-
+            e.preventDefault();
             const title = document.getElementById('title').value;
             const content = document.getElementById('content').value;
-            const publishedDate = document.getElementById('publishedDate').value; // Capture the publishedDate
+            const publishedDate = document.getElementById('publishedDate').value;
             const seoTitle = document.getElementById('seoTitle').value;
             const seoDescription = document.getElementById('seoDescription').value;
-            const seoKeywords = document.getElementById('seoKeywords').value.split(','); // Assuming keywords are comma-separated
+            const seoKeywords = document.getElementById('seoKeywords').value.split(',').map(keyword => keyword.trim());
 
-            const post = { title, content, publishedDate, seoTitle, seoDescription, seoKeywords };
+            const post = {
+                title, content, publishedDate, seoTitle, seoDescription, seoKeywords
+            };
 
             try {
                 const response = await fetch('/api/posts', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(post),
                 });
 
                 if (response.ok) {
                     console.log('Post added successfully');
-                    // Optionally clear the form or redirect the user
+                    document.getElementById('postForm').reset(); // Clear the form
                 } else {
-                    console.error('Failed to add post');
-                    // Handle errors or notify the user
+                    console.error('Failed to add post. Server responded with:', await response.text());
                 }
             } catch (error) {
                 console.error('Error submitting post:', error);
+            }
+        });
+
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            const currentTheme = document.body.dataset.theme;
+            switch (currentTheme) {
+                case 'light-theme':
+                    document.body.dataset.theme = 'medium-theme';
+                    document.body.className = 'medium-theme';
+                    break;
+                case 'medium-theme':
+                    document.body.dataset.theme = 'dark-theme';
+                    document.body.className = 'dark-theme';
+                    break;
+                case 'dark-theme':
+                default:
+                    document.body.dataset.theme = 'light-theme';
+                    document.body.className = 'light-theme';
+                    break;
             }
         });
     </script>
