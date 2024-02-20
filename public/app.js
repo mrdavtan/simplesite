@@ -35,19 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const title = document.getElementById('title').value;
         const content = document.getElementById('content').value;
         const publishedDate = document.getElementById('publishedDate').value;
-        const seoTitle = document.getElementById('seoTitle').value;
-        const seoDescription = document.getElementById('seoDescription').value;
+        const Description = document.getElementById('Description').value;
         // Assuming keywords are entered as comma-separated, and trimming each keyword to remove extra spaces
-        const seoKeywords = document.getElementById('seoKeywords').value.split(',').map(keyword => keyword.trim());
+        const Keywords = document.getElementById('Keywords').value.split(',').map(keyword => keyword.trim());
 
         // Preparing the post object with all captured values
         const post = {
             title,
             content,
             publishedDate,
-            seoTitle,
-            seoDescription,
-            seoKeywords
+            Description,
+            Keywords
+            imageDescription
         };
 
         console.log('Sending post to server:', post);
