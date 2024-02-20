@@ -9,26 +9,39 @@
 </head>
 <body class="light-theme" data-theme="light-theme">
     <header>
-        <!-- Header content -->
         <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
     </header>
+
 
     <main>
         <h1>Create a New Blog Post</h1>
         <div class="form-container">
             <form id="postForm">
+                <label for="title">Title:</label>
                 <input type="text" id="title" placeholder="Title" required><br>
+
+                <label for="content">Content:</label>
                 <textarea id="content" placeholder="Content" required></textarea><br>
+
+                <label for="publishedDate">Published Date:</label>
                 <input type="date" id="publishedDate" placeholder="Published Date" required><br>
-                <input type="text" id="Description" placeholder="Description"><br>
-                <input type="text" id="Keywords" placeholder="Keywords"><br>
-                <input type="text" id="imageDescription" placeholder="Image Description" required><br> <!-- New Input for Image Description -->
+
+                <label for="description">Description:</label>
+                <input type="text" id="description" placeholder="Description" required><br>
+
+                <label for="keywords">Keywords:</label>
+                <input type="text" id="keywords" placeholder="Keywords" required><br>
+
+                <label for="imageDescription">Image Description:</label>
+                <input type="text" id="imageDescription" placeholder="Image Description" required><br>
+
                 <button type="submit">Submit</button>
             </form>
         </div>
     </main>
 
-    <script src="app.js"></script> <!-- Make sure app.js is correctly linked -->
+    <script src="editor.js"></script> <!-- Make sure the path to your JS file is correct -->
+    <script src="themetoggle.js"></script> <!-- Make sure the path to your JS file is correct -->
 </body>
 </html>
 
