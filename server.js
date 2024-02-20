@@ -42,7 +42,9 @@ app.get('/admin', adminAuth, (req, res) => {
 app.get('/main', async (req, res) => {
     console.log('Fetching blog posts for /main');
     try {
-        const blogDirectory = path.join(__dirname, 'blog');
+        const blogDirectory = path.join(__dirname, 'db', 'blog');
+
+
         const postFiles = fs.readdirSync(blogDirectory).filter(file => file.endsWith('.json'));
         console.log(`Found ${postFiles.length} post files in the blog directory.`);
         const posts = postFiles.filter(file => file.endsWith('.json')).map(file => {
@@ -58,6 +60,7 @@ app.get('/main', async (req, res) => {
     }
 });
 
+
 // Endpoint to handle blog post submissions
 app.post('/submit', async (req, res) => {
     console.log('Submit endpoint hit'); // Diagnostic log
@@ -65,16 +68,21 @@ app.post('/submit', async (req, res) => {
     const post = req.body; // Extract post data from the request body
     try {
         const db = await getDbForPost(post);
-    console.log('Attempting to save post:', post);
-        await db.write(post); // Assuming db.write() correctly saves the post object
+        console.log('Attempting to save post:', post);
+
+        // Assuming the db object allows direct manipulation of its data property
+        // and requires a call to .write() to persist the change.
+        db.data = {...post}; // Update the db object with the new post data
+        await db.write(); // Persist the changes
+
         console.log('Post saved:', post);
         res.status(201).send('Post saved successfully');
     } catch (error) {
-    console.error('Error during post submission:', error);
-        console.error('Failed to save post:', error);
+        console.error('Error during post submission:', error);
         res.status(500).send('Failed to save post');
     }
 });
+
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
