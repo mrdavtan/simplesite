@@ -1,13 +1,12 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
-import { getDbForPost } from './db/db.js'; // Import getDbForPost from db.js
+import { getDbForPost } from './db/db.js';
 import { fileURLToPath } from 'url';
 import basicAuth from 'express-basic-auth';
+import OpenAI from 'openai';
 
-import { Configuration, OpenAIApi } from "openai";
-
-
+const openai = new OpenAI();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,7 +38,7 @@ app.use(express.static('public'));
 // Password-protected route for blog administration
 app.get('/admin', adminAuth, (req, res) => {
     console.log('Access granted to /admin');
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'editor.html'));
 });
 
 // Route to display blog posts on /main
@@ -63,13 +62,6 @@ app.get('/main', async (req, res) => {
         res.status(500).send('Error loading posts');
     }
 });
-
-
-// Endpoint to handle blog post submissions
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY, // Ensure your API key is stored in an environment variable
-});
-const openai = new OpenAIApi(configuration);
 
 app.post('/submit', async (req, res) => {
     console.log('Submit endpoint hit');
