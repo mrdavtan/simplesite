@@ -5,6 +5,10 @@ import { getDbForPost } from './db/db.js'; // Import getDbForPost from db.js
 import { fileURLToPath } from 'url';
 import basicAuth from 'express-basic-auth';
 
+import { Configuration, OpenAIApi } from "openai";
+
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -62,28 +66,48 @@ app.get('/main', async (req, res) => {
 
 
 // Endpoint to handle blog post submissions
+const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY, // Ensure your API key is stored in an environment variable
+});
+const openai = new OpenAIApi(configuration);
+
 app.post('/submit', async (req, res) => {
-    console.log('Submit endpoint hit'); // Diagnostic log
+    console.log('Submit endpoint hit');
     console.log('Received a submission request');
-    const post = req.body; // Extract post data from the request body
+    const { title, content, imageDescription } = req.body;
+
     try {
+        // Generate an image based on the provided description
+        const response = await openai.createImage({
+            model: "text-davinci-003",
+            prompt: imageDescription,
+            n: 1,
+            size: "1024x1024"
+        });
+
+        const imageUrl = response.data[0].url;
+
+        // Extend your post object to include the imageUrl
+        const post = {
+            title,
+            content,
+            imageDescription,
+            imageUrl, // Add the generated image URL to your post object
+        };
+
+        // Continue with saving the post to your database
         const db = await getDbForPost(post);
         console.log('Attempting to save post:', post);
-
-        // Assuming the db object allows direct manipulation of its data property
-        // and requires a call to .write() to persist the change.
-        db.data = {...post}; // Update the db object with the new post data
-        await db.write(); // Persist the changes
+        db.data = {...post};
+        await db.write();
 
         console.log('Post saved:', post);
-        res.status(201).send('Post saved successfully');
+        res.status(201).send({ message: 'Post saved successfully', post });
     } catch (error) {
         console.error('Error during post submission:', error);
         res.status(500).send('Failed to save post');
     }
 });
-
-
 
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

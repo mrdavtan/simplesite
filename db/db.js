@@ -43,9 +43,9 @@ async function getDbForPost(post) {
         title: post.title,
         content: post.content,
         publishedDate: post.publishedDate,
-        description: post.description, // Add the seoDescription field
-        imageDescription:post.imageDescription
-        imagePath: post.imagePath, // Add the imagePath field
+        description: post.description,
+        imageDescription:post.imageDescription,
+        imagePath: post.imagePath,
         images: [],
         comments: [],
         tags: [],
