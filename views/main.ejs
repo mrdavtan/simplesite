@@ -6,7 +6,7 @@
     <title>David Tang</title>
 
     <link rel="stylesheet" href="./reset_styles.css">
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="./main_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
  <!--    <script src="./scripts/loadPosts.js" defer></script> -->
 
@@ -43,11 +43,14 @@
                 <div class="blog-container">
                     <% posts.forEach(function(post) { %>
                         <div class="post">
-                            <h2><%= post.title %></h2>
-                            <p><%= post.content %></p>
+                            <div class="image-container">
+                                <h2><%= post.title %></h2>
+                                <img src="<%= post.imagePath %>" alt="<%= post.imageDescription %>">
+                            <p><%= post.description %></p> <!-- Display the SEO description -->
                         </div>
-                    <% }); %>
-                </div>
+                    </div>
+                <% }); %>
+               </div>
             </section>
             </section>
 

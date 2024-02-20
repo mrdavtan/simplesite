@@ -37,15 +37,21 @@ async function getDbForPost(post) {
     const filePath = path.join(blogDirectory, filename);
 
     // Use JSONFilePreset for creating or accessing a JSON file with default data
+
     const db = await JSONFilePreset(filePath, {
         id: post.id,
         title: post.title,
         content: post.content,
         publishedDate: post.publishedDate,
+        description: post.description, // Add the seoDescription field
+        imageDescription:post.imageDescription
+        imagePath: post.imagePath, // Add the imagePath field
+        images: [],
         comments: [],
         tags: [],
-        images: []
     });
+
+
 
     // With JSONFilePreset, the explicit db.read() call is not required as it handles initialization
 

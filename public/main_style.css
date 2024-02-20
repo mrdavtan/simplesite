@@ -186,8 +186,31 @@ footer {
 .blog-container, .footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    height: 15vh;
+    gap: 0px;
+    overflow:hidden;
 }
+
+.post .image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: bottom;
+    border: var(--border-width) solid var(--border-color);
+    padding: 15px;
+    height: 12vh;
+}
+
+.image-container img {
+    width: 100%; /* Adjust based on your layout */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.image-container h2 {
+    text-align: bottom;
+    margin-top: 10px; /* Space between image and title */
+}
+
+
 
 /* Footer section styling */
 .footer-section {
@@ -198,7 +221,14 @@ footer {
     padding: 20px;
     background-color: var(--box-background-color);
 }
-
+<% posts.forEach(function(post) { %>
+    <div class="post">
+        <div class="image-container">
+            <img src="path/to/your/image.jpg" alt="Image Description">
+            <h2><%= post.title %></h2>
+        </div>
+    </div>
+<% }); %>
 /* Image styling for responsiveness */
 img {
     width: 100%;
