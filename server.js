@@ -6,6 +6,9 @@ import { fileURLToPath } from 'url';
 import basicAuth from 'express-basic-auth';
 import OpenAI from 'openai';
 
+import axios from 'axios';
+
+
 const openai = new OpenAI();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -83,12 +86,31 @@ app.post('/submit', async (req, res) => {
                          ? response.data.data[0].url
                          : 'Default image URL or indication that no image was generated';
 
-        // Extend your post object to include the imageUrl
+            if (imageUrl.startsWith('http')) {
+                // If valid, proceed with downloading the image
+                const imageName = '...'; // Determine your imageName based on your requirements
+                await downloadImage(imageUrl, imageName);
+                // Proceed with the rest of your logic, such as saving the post with the image
+            } else {
+                // If not valid, log an error or handle accordingly
+                console.error('No valid image URL provided:', imageUrl);
+                // Respond with an error message or fallback logic
+                res.status(400).send('Invalid image URL provided');
+                return; // Stop further execution in this case
+            }
+
+        // Here, download the image and save it locally, then get the local path
+        const now = new Date();
+        const imageName = `image_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}.png`;
+        await downloadImage(imageUrl, imageName);
+        const localImagePath = `/img/blog/${imageName}`;
+
+        // Extend your post object to include the localImagePath
         const post = {
             title,
             content,
             imageDescription,
-            imageUrl // Add the generated image URL to your post object
+            imageUrl: localImagePath // Use the local path instead of the direct URL
         };
 
         // Placeholder for database saving logic
@@ -101,6 +123,26 @@ app.post('/submit', async (req, res) => {
         res.status(500).send('Failed to save post');
     }
 });
+
+// Function to download and save an image from a URL
+async function downloadImage(imageUrl, imageName) {
+  const response = await axios({
+    method: 'GET',
+    url: imageUrl,
+    responseType: 'stream',
+  });
+
+  const pathToSave = path.join(__dirname, 'public/images/blog', imageName);
+  const writer = fs.createWriteStream(pathToSave);
+
+  response.data.pipe(writer);
+
+  return new Promise((resolve, reject) => {
+    writer.on('finish', resolve);
+    writer.on('error', reject);
+  });
+}
+
 
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
