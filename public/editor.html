@@ -7,11 +7,29 @@
     <link rel="stylesheet" href="../reset_styles.css">
     <link rel="stylesheet" href="editor.css">
 </head>
-<body class="light-theme" data-theme="light-theme">
+
     <header>
-        <button id="theme-toggle" class="theme-toggle">Toggle Theme</button>
+      <nav>
+        <div id="theme-toggle-container">
+            <button id="theme-toggle">Toggle Theme</button>
+        </div>
+        <div id="nav-links-container">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
     </header>
 
+
+
+<body class="light-theme" data-theme="light-theme">
+
+        <div class="box">
 
     <main>
         <h1>Create a New Blog Post</h1>
@@ -39,6 +57,13 @@
             </form>
         </div>
     </main>
+
+</div>
+
+    <footer>
+       <p>&copy; 2024 Your Name. All Rights Reserved.</p>
+    </footer>
+
 
     <script src="editor.js"></script> <!-- Make sure the path to your JS file is correct -->
     <script src="themetoggle.js"></script> <!-- Make sure the path to your JS file is correct -->

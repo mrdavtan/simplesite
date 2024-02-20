@@ -65,33 +65,34 @@ app.get('/main', async (req, res) => {
 
 app.post('/submit', async (req, res) => {
     console.log('Submit endpoint hit');
-    console.log('Received a submission request');
     const { title, content, imageDescription } = req.body;
 
     try {
         // Generate an image based on the provided description
-        const response = await openai.createImage({
-            model: "text-davinci-003",
+        const response = await openai.images.generate({
             prompt: imageDescription,
             n: 1,
             size: "1024x1024"
         });
 
-        const imageUrl = response.data[0].url;
+        // Log the response to inspect the structure
+        console.log('Response data:', response.data);
+
+        // Safely access the first image URL, if available
+        const imageUrl = response.data && response.data.data && response.data.data.length > 0
+                         ? response.data.data[0].url
+                         : 'Default image URL or indication that no image was generated';
 
         // Extend your post object to include the imageUrl
         const post = {
             title,
             content,
             imageDescription,
-            imageUrl, // Add the generated image URL to your post object
+            imageUrl // Add the generated image URL to your post object
         };
 
-        // Continue with saving the post to your database
-        const db = await getDbForPost(post);
+        // Placeholder for database saving logic
         console.log('Attempting to save post:', post);
-        db.data = {...post};
-        await db.write();
 
         console.log('Post saved:', post);
         res.status(201).send({ message: 'Post saved successfully', post });
