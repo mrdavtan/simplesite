@@ -6,7 +6,31 @@ import { fileURLToPath } from 'url';
 import basicAuth from 'express-basic-auth';
 import OpenAI from 'openai';
 
+import * as http from 'http';
+
 import axios from 'axios';
+
+
+
+const options = {
+  hostname: 'example.com',
+  port: 80,
+  path: '/',
+  method: 'GET',
+};
+
+const req = http.request(options, (res) => {
+  // Handle response from the server
+});
+req.on('error', (error) => {
+  if (error.code === 'ECONNREFUSED') {
+    console.error('Connection refused by the server');
+    // Handle the error or retry the connection
+  } else {
+    console.error('An error occurred:', error.message);
+  }
+});
+req.end();
 
 
 const openai = new OpenAI();
@@ -66,6 +90,10 @@ app.get('/main', async (req, res) => {
     }
 });
 
+//const Post = require('./models/Post'); // Assuming you have a Post model defined
+
+app.use(express.json()); // Middleware to parse JSON bodies
+
 app.post('/submit', async (req, res) => {
     console.log('Submit endpoint hit');
     const { title, content, imageDescription } = req.body;
@@ -79,45 +107,41 @@ app.post('/submit', async (req, res) => {
         });
 
         // Log the response to inspect the structure
-        console.log('Response data:', response.data);
+        console.log('Response data:', response);
 
-        // Safely access the first image URL, if available
-        const imageUrl = response.data && response.data.data && response.data.data.length > 0
-                         ? response.data.data[0].url
-                         : 'Default image URL or indication that no image was generated';
+        // Correctly extracting the imageUrl from the response structure
+        const imageUrl = response.data[0].url ? response.data[0].url : 'Default image URL or indication that no image was generated';
 
-            if (imageUrl.startsWith('http')) {
-                // If valid, proceed with downloading the image
-                const imageName = '...'; // Determine your imageName based on your requirements
-                await downloadImage(imageUrl, imageName);
-                // Proceed with the rest of your logic, such as saving the post with the image
-            } else {
-                // If not valid, log an error or handle accordingly
-                console.error('No valid image URL provided:', imageUrl);
-                // Respond with an error message or fallback logic
-                res.status(400).send('Invalid image URL provided');
-                return; // Stop further execution in this case
-            }
+        // Adjusting the if condition to properly validate the imageUrl
+        if (imageUrl !== 'Default image URL or indication that no image was generated') {
+            // If valid, proceed with downloading the image
+            const now = new Date();
+            const imageName = `image_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}.png`;
+            console.log(imageUrl);
+            console.log(imageName);
+            await downloadImage(imageUrl, imageName);
+            const localImagePath = `/img/blog/${imageName}`;
 
-        // Here, download the image and save it locally, then get the local path
-        const now = new Date();
-        const imageName = `image_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}.png`;
-        await downloadImage(imageUrl, imageName);
-        const localImagePath = `/img/blog/${imageName}`;
+            // Extend your post object to include the localImagePath
+            const post = {
+                title,
+                content,
+                imageDescription,
+                imageUrl: localImagePath // Use the local path instead of the direct URL
+            };
 
-        // Extend your post object to include the localImagePath
-        const post = {
-            title,
-            content,
-            imageDescription,
-            imageUrl: localImagePath // Use the local path instead of the direct URL
-        };
+            // Here you would save the post object to your database
+            console.log('Attempting to save post:', post);
+            // Database saving logic goes here...
 
-        // Placeholder for database saving logic
-        console.log('Attempting to save post:', post);
-
-        console.log('Post saved:', post);
-        res.status(201).send({ message: 'Post saved successfully', post });
+            console.log('Post saved:', post);
+            res.status(201).send({ message: 'Post saved successfully', post });
+        } else {
+            // If the imageUrl variable falls back to the default message, handle it as an error
+            console.error('No valid image URL provided:', imageUrl);
+            res.status(400).send('Invalid image URL provided');
+            return; // Stop further execution in this case
+        }
     } catch (error) {
         console.error('Error during post submission:', error);
         res.status(500).send('Failed to save post');
@@ -126,24 +150,28 @@ app.post('/submit', async (req, res) => {
 
 // Function to download and save an image from a URL
 async function downloadImage(imageUrl, imageName) {
-  const response = await axios({
-    method: 'GET',
-    url: imageUrl,
-    responseType: 'stream',
-  });
+  try {
+    const response = await axios({
+      method: 'GET',
+      url: imageUrl,
+      responseType: 'stream',
+    });
 
-  const pathToSave = path.join(__dirname, 'public/images/blog', imageName);
-  const writer = fs.createWriteStream(pathToSave);
+    const pathToSave = path.join(__dirname, 'public/img/blog', imageName);
+    const writer = fs.createWriteStream(pathToSave);
 
-  response.data.pipe(writer);
+    response.data.pipe(writer);
 
-  return new Promise((resolve, reject) => {
-    writer.on('finish', resolve);
-    writer.on('error', reject);
-  });
+    return new Promise((resolve, reject) => {
+      writer.on('finish', resolve);
+      writer.on('error', reject);
+    });
+  } catch (error) {
+    console.error('Failed to download image:', error);
+    throw new Error('Failed to download image');
+  }
 }
 
-
-
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
 
