@@ -28,14 +28,20 @@ function generateFilename(post) {
         throw new Error(`Invalid publishedDate value: ${post.publishedDate}`);
     }
 
-    const dateString = date.toISOString().split('T')[0];
-    const timeString = date.toISOString().split('T')[1].slice(0, 8).replace(/:/g, '');
-    const simplifiedTitle = post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-    const filename = `${dateString}_${timeString}_${simplifiedTitle}.json`;
+    // Sanitize the title to be filesystem-friendly, replacing spaces with underscores
+    const sanitizedTitle = post.title.toLowerCase().replace(/\s+/g, '_').replace(/[^\w-]+/g, '');
+    // Format the date as YYYYMMDD
+    const datePart = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+    // Optionally include time part formatted as HHMMSS, if needed
+    const timePart = `${date.getHours().toString().padStart(2, '0')}${date.getMinutes().toString().padStart(2, '0')}${date.getSeconds().toString().padStart(2, '0')}`;
+
+    // Construct filename with the title first, followed by the date and time
+    const filename = `${sanitizedTitle}_${datePart}${timePart}.json`;
     console.log(`Generated filename: ${filename}`); // Log the generated filename
 
     return filename;
 }
+
 
 async function getDbForPost(post) {
     const filename = generateFilename(post);
