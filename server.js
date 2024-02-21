@@ -54,6 +54,10 @@ app.post('/submit', async (req, res) => {
     console.log('Submit endpoint hit');
     const { title, content, imageDescription } = req.body;
 
+    // In case you want to allow the publishedDate to be passed in the form,
+    // otherwise, it's generated at the current moment.
+    // const { publishedDate = new Date().toISOString() } = req.body;
+
     try {
         // Generate an image based on the provided description
         const response = await openai.images.generate({
@@ -62,15 +66,11 @@ app.post('/submit', async (req, res) => {
             size: "1024x1024"
         });
 
-        // Log the response to inspect the structure
         console.log('Response data:', response);
 
-        // Correctly extracting the imageUrl from the response structure
         const imageUrl = response.data[0].url ? response.data[0].url : 'Default image URL or indication that no image was generated';
 
-        // Adjusting the if condition to properly validate the imageUrl
         if (imageUrl !== 'Default image URL or indication that no image was generated') {
-            // If valid, proceed with downloading the image
             const now = new Date();
             const imageName = `image_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}.png`;
             console.log(imageUrl);
@@ -78,15 +78,18 @@ app.post('/submit', async (req, res) => {
             await downloadImage(imageUrl, imageName);
             const localImagePath = `/img/blog/${imageName}`;
 
-            // Extend your post object to include the localImagePath
+            // Dynamically generate the publishedDate for the post
+            const publishedDate = new Date().toISOString();
+
             const post = {
                 title,
                 content,
                 imageDescription,
-                imageUrl: localImagePath // Use the local path instead of the direct URL
+                imageUrl: localImagePath,
+                publishedDate // Injecting the generated publishedDate here
             };
 
-            // Saving the post object to the database
+            console.log('Attempting to save post:', post);
             const db = await getDbForPost(post);
             db.data = post;
             await db.write();
@@ -94,16 +97,16 @@ app.post('/submit', async (req, res) => {
             console.log('Post saved:', post);
             res.status(201).send({ message: 'Post saved successfully', post });
         } else {
-            // If the imageUrl variable falls back to the default message, handle it as an error
             console.error('No valid image URL provided:', imageUrl);
             res.status(400).send('Invalid image URL provided');
-            return; // Stop further execution in this case
+            return;
         }
     } catch (error) {
         console.error('Error during post submission:', error);
         res.status(500).send('Failed to save post');
     }
 });
+
 
 // Function to download and save an image from a URL
 async function downloadImage(imageUrl, imageName) {
