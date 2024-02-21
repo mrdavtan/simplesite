@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="./styles/reset_styles.css">
     <link rel="stylesheet" href="./styles/main_style.css">
+    <link rel="stylesheet" href="./styles/post-card.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
@@ -32,7 +33,7 @@
 
             <section id="about">
                 <h2>About</h2>
-                    <div class="hero-img-container" style="background-image: url('img/office.webp');" alt="A description of the image"></div>
+                    <div class="hero-img-container" style="background-image: url('/img/office.webp');" alt="A description of the image"></div>
 
                 <!-- Detailed about me/personal journey content goes here -->
             </section>
@@ -40,17 +41,19 @@
             <section id="Latest">
                 <h2>Latest</h2>
                 <div class="blog-container">
+
+
                     <% posts.forEach(function(post) { %>
-                        <div class="post">
-                            <div class="image-container">
-                                <h2><%= post.title %></h2>
-                                <img src="<%= post.imagePath %>" alt="<%= post.imageDescription %>">
-                            <p><%= post.description %></p> <!-- Display the SEO description -->
+                        <div class="post-card">
+                            <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>" class="post-image">
+                            <div class="post-content">
+                                <h3 class="post-title"><%= post.title %></h3>
+                                <p class="post-summary"><%= post.description %></p>
+                            </div>
                         </div>
-                    </div>
-                <% }); %>
+                    <% }); %>
+
                </div>
-            </section>
             </section>
 
             <section id="projects">
@@ -94,7 +97,7 @@
         </div>
         <p>&copy; 2024 Your Name. All Rights Reserved.</p>
     </footer>
-    <script src="/scripts/themetoggle.js"></script>
+    <script src="/scripts/theme-switcher.js"></script>
 </body>
 </html>
 

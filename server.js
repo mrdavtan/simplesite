@@ -18,6 +18,17 @@ const openai = new OpenAI();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+//const localImagePath = `/img/blog/${imageName}`;
+//const post = {
+//    title,
+//    content,
+//    imageDescription,
+//    imageUrl: localImagePath, // This should be the relative path used in the <img src="">
+//    publishedDate
+//};
+//
+
+
 app.use(express.json()); // Middleware to parse JSON bodies
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
