@@ -58,6 +58,7 @@ app.post('/submit', async (req, res) => {
         // Generate an image based on the provided description
         const response = await openai.images.generate({
             prompt: imageDescription,
+            model: "dall-e-3",
             n: 1,
             size: "1024x1024"
         });

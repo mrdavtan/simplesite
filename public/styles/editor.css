@@ -121,6 +121,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 1rem;
 }
 
 h1 {
@@ -181,6 +182,35 @@ h1 {
 
 #keywords {
     flex-grow: 1; /* Allows the keywords input to grow and fill the remaining space */
+}
+
+main .form-container #submit {
+    background-color: var(--accent-color); /* Accent color for the background */
+    color: var(--accent-color); /* White text color for contrast */
+    border: none; /* No border for the button */
+    border-radius: 0; /* No border radius to achieve square edges */
+    padding: 10px 15px; /* Thicker appearance through padding */
+    cursor: pointer; /* Change cursor to pointer to indicate clickability */
+    font-size: 1rem; /* Adjust font size as needed */
+    font-weight: bold; /* Optional: makes the text bold */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}   /* Your Styles */
+
+
+#submit {
+    background-color: var(--accent-color); /* Accent color for the background */
+    color: #ffffff; /* White text color for contrast */
+    border: none; /* No border for the button */
+    border-radius: 0; /* No border radius to achieve square edges */
+    padding: 10px 15px; /* Thicker appearance through padding */
+    cursor: pointer; /* Change cursor to pointer to indicate clickability */
+    font-size: 1rem; /* Adjust font size as needed */
+    font-weight: bold; /* Optional: makes the text bold */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+#submit:hover {
+    background-color: darken(var(--accent-color), 10%); /* Optional: darken on hover for visual feedback */
 }
 
 input[type="text"],
