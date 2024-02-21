@@ -5,93 +5,50 @@ import { getDbForPost } from './db/db.js';
 import { fileURLToPath } from 'url';
 import basicAuth from 'express-basic-auth';
 import OpenAI from 'openai';
-
 import * as http from 'http';
-
 import axios from 'axios';
 
+const app = express();
+const PORT = 3001;
 
-
-const options = {
-  hostname: 'example.com',
-  port: 80,
-  path: '/',
-  method: 'GET',
-};
-
-const req = http.request(options, (res) => {
-  // Handle response from the server
-});
-req.on('error', (error) => {
-  if (error.code === 'ECONNREFUSED') {
-    console.error('Connection refused by the server');
-    // Handle the error or retry the connection
-  } else {
-    console.error('An error occurred:', error.message);
-  }
-});
-req.end();
-
-
+// Initialize OpenAI - Ensure you replace with your actual initialization
 const openai = new OpenAI();
 
+// Define __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
-// Middleware to parse JSON bodies
-app.use(express.json());
-const PORT = 3001;
+app.use(express.json()); // Middleware to parse JSON bodies
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static('public')); // Middleware to serve static files from 'public'
 
 // Basic Authentication for the /admin route
 const adminAuth = basicAuth({
-    users: {
-        'admin': 'password'
-    }, // Replace 'password' with a strong password
+    users: { 'admin': 'password' }, // Replace 'password' with a strong password
     challenge: true,
     realm: 'Admin',
-    unauthorizedResponse: req => {
-        console.log('Unauthorized access attempt to /admin');
-        return 'Unauthorized';
-    }
+    unauthorizedResponse: req => 'Unauthorized',
 });
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// Middleware to serve static files from 'public'
-app.use(express.static('public'));
-
-// Password-protected route for blog administration
 app.get('/admin', adminAuth, (req, res) => {
-    console.log('Access granted to /admin');
     res.sendFile(path.join(__dirname, 'public', 'editor.html'));
 });
 
-// Route to display blog posts on /main
 app.get('/main', async (req, res) => {
-    console.log('Fetching blog posts for /main');
     try {
         const blogDirectory = path.join(__dirname, 'db', 'blog');
-
-
         const postFiles = fs.readdirSync(blogDirectory).filter(file => file.endsWith('.json'));
-        console.log(`Found ${postFiles.length} post files in the blog directory.`);
-        const posts = postFiles.filter(file => file.endsWith('.json')).map(file => {
+        const posts = postFiles.map(file => {
             const filePath = path.join(blogDirectory, file);
-            const fileContent = fs.readFileSync(filePath, { encoding: 'utf8' });
-            return JSON.parse(fileContent);
+            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
         });
-        console.log(`Successfully loaded ${posts.length} posts.`);
         res.render('main', { posts });
     } catch (error) {
-        console.error('Error fetching posts for /main:', error);
+        console.error(`Error fetching posts for /main: ${error}`);
         res.status(500).send('Error loading posts');
     }
 });
-
-
-app.use(express.json()); // Middleware to parse JSON bodies
 
 app.post('/submit', async (req, res) => {
     console.log('Submit endpoint hit');
@@ -129,31 +86,10 @@ app.post('/submit', async (req, res) => {
                 imageUrl: localImagePath // Use the local path instead of the direct URL
             };
 
-            // Here you would save the post object to your database
-            console.log('Attempting to save post:', post);
-            // Database saving logic goes here...
-
-            app.post('/api/posts', async (req, res) => {
-                const { title, content, publishedDate, seoTitle, seoDescription, seoKeywords } = req.body;
-
-                // Ensure all required fields are present
-                if (!title || !content || !publishedDate) {
-                    return res.status(400).json({ message: 'Missing required fields' });
-                }
-
-                try {
-                    const post = { id: Date.now().toString(), title, content, publishedDate, seoTitle, seoDescription, seoKeywords }; // Construct the post object with a unique ID
-                    const db = await getDbForPost(post);
-                    // Since each post is stored in its own file, directly set db.data to post
-                    db.data = post;
-                    await db.write();
-                    res.status(201).json({ message: 'Post added successfully.' });
-                } catch (error) {
-                    console.error('Error saving post:', error);
-                    res.status(500).json({ message: 'Failed to add the post', error: error.toString() });
-                }
-            });
-
+            // Saving the post object to the database
+            const db = await getDbForPost(post);
+            db.data = post;
+            await db.write();
 
             console.log('Post saved:', post);
             res.status(201).send({ message: 'Post saved successfully', post });
@@ -194,5 +130,4 @@ async function downloadImage(imageUrl, imageName) {
 }
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-
 
