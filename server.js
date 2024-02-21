@@ -54,10 +54,6 @@ app.post('/submit', async (req, res) => {
     console.log('Submit endpoint hit');
     const { title, content, imageDescription } = req.body;
 
-    // In case you want to allow the publishedDate to be passed in the form,
-    // otherwise, it's generated at the current moment.
-    // const { publishedDate = new Date().toISOString() } = req.body;
-
     try {
         // Generate an image based on the provided description
         const response = await openai.images.generate({
@@ -72,13 +68,16 @@ app.post('/submit', async (req, res) => {
 
         if (imageUrl !== 'Default image URL or indication that no image was generated') {
             const now = new Date();
-            const imageName = `image_${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}.png`;
+            // Sanitize the title to be filesystem-friendly
+            const sanitizedTitle = title.toLowerCase().replace(/\s+/g, '_').replace(/[^\w-]+/g, '');
+            const datePart = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
+            const timePart = `${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+            const imageName = `${sanitizedTitle}_${datePart}_${timePart}.png`;
             console.log(imageUrl);
             console.log(imageName);
             await downloadImage(imageUrl, imageName);
             const localImagePath = `/img/blog/${imageName}`;
 
-            // Dynamically generate the publishedDate for the post
             const publishedDate = new Date().toISOString();
 
             const post = {
@@ -86,10 +85,9 @@ app.post('/submit', async (req, res) => {
                 content,
                 imageDescription,
                 imageUrl: localImagePath,
-                publishedDate // Injecting the generated publishedDate here
+                publishedDate
             };
 
-            console.log('Attempting to save post:', post);
             const db = await getDbForPost(post);
             db.data = post;
             await db.write();
