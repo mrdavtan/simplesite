@@ -144,17 +144,60 @@ h1 {
     align-items: left;
 }
 
+.row {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Adds some space between the inputs */
+}
+
+#publishedDate {
+    flex-basis: 15%; /* Sets the base size of the element to 10% of the flex container's size */
+    max-width: 15%; /* Ensures it doesn't grow beyond 10% */
+}
+
+#keywords {
+    flex-grow: 1; /* Allows the keywords input to grow and fill the remaining space */
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Adds some space between the inputs */
+}
+
+#fillDateTime {
+    width: 40px;
+    border: none; /* Remove the default border */
+    background-color: var(--accent-color); /* Button-like appearance */
+}
+
+#publishedDate {
+    width: 180px; /* Prevents the field from exceeding this width */
+}
+
+#publishTime {
+    width: 150px; /* Prevents the field from exceeding this width */
+}
+
+#keywords {
+    flex-grow: 1; /* Allows the keywords input to grow and fill the remaining space */
+}
+
 input[type="text"],
 input[type="date"],
+input[type="time"],
 textarea {
-    width: 100%;
+    width: 100%; /* Full width within its container */
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid var(--border-color);
-    border-radius: 0; /* Adjusted to remove border-radius as per your correction */
     background-color: var(--input-background-color);
     color: var(--text-color);
+    border-radius: 0; /* No border-radius as per your style */
 }
+
+.row-button {
+    }
 
 textarea {
     height: 50vh;
