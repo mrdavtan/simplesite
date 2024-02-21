@@ -90,7 +90,6 @@ app.get('/main', async (req, res) => {
     }
 });
 
-//const Post = require('./models/Post'); // Assuming you have a Post model defined
 
 app.use(express.json()); // Middleware to parse JSON bodies
 
@@ -133,6 +132,28 @@ app.post('/submit', async (req, res) => {
             // Here you would save the post object to your database
             console.log('Attempting to save post:', post);
             // Database saving logic goes here...
+
+            app.post('/api/posts', async (req, res) => {
+                const { title, content, publishedDate, seoTitle, seoDescription, seoKeywords } = req.body;
+
+                // Ensure all required fields are present
+                if (!title || !content || !publishedDate) {
+                    return res.status(400).json({ message: 'Missing required fields' });
+                }
+
+                try {
+                    const post = { id: Date.now().toString(), title, content, publishedDate, seoTitle, seoDescription, seoKeywords }; // Construct the post object with a unique ID
+                    const db = await getDbForPost(post);
+                    // Since each post is stored in its own file, directly set db.data to post
+                    db.data = post;
+                    await db.write();
+                    res.status(201).json({ message: 'Post added successfully.' });
+                } catch (error) {
+                    console.error('Error saving post:', error);
+                    res.status(500).json({ message: 'Failed to add the post', error: error.toString() });
+                }
+            });
+
 
             console.log('Post saved:', post);
             res.status(201).send({ message: 'Post saved successfully', post });

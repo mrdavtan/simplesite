@@ -1,63 +1,64 @@
-import { fileURLToPath } from 'url';
-// Import the required modules from lowdb and Node.js file system
 import { JSONFilePreset } from 'lowdb/node';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Define the directory where blog posts will be stored
 const blogDirectory = path.join(path.dirname(fileURLToPath(import.meta.url)), 'blog');
+console.log(`Blog directory path: ${blogDirectory}`); // Log the path of the blog directory
 
 // Ensure the blog directory exists
 if (!fs.existsSync(blogDirectory)) {
+    console.log('Blog directory does not exist, creating it...');
     fs.mkdirSync(blogDirectory, { recursive: true });
+} else {
+    console.log('Blog directory already exists.');
 }
 
 function generateFilename(post) {
-    // Safeguard for undefined post.publishedDate
+    console.log(`Generating filename for post titled: ${post.title}`); // Log the title of the post being processed
+
     if (!post.publishedDate) {
+        console.error('post.publishedDate is undefined');
         throw new Error('post.publishedDate is undefined');
     }
 
     const date = new Date(post.publishedDate);
-
-    // Check if 'date' is an invalid date
     if (isNaN(date.getTime())) {
+        console.error(`Invalid publishedDate value: ${post.publishedDate}`);
         throw new Error(`Invalid publishedDate value: ${post.publishedDate}`);
     }
 
-    const dateString = date.toISOString().split('T')[0]; // "YYYY-MM-DD"
-    const timeString = date.toISOString().split('T')[1].slice(0, 5).replace(':', ''); // "HHMM"
+    const dateString = date.toISOString().split('T')[0];
+    const timeString = date.toISOString().split('T')[1].slice(0, 8).replace(/:/g, '');
     const simplifiedTitle = post.title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-    return `${dateString}_${timeString}_${post.id}_${simplifiedTitle}.json`;
+    const filename = `${dateString}_${timeString}_${simplifiedTitle}.json`;
+    console.log(`Generated filename: ${filename}`); // Log the generated filename
+
+    return filename;
 }
 
-// Function to initialize and access the database for a specific post
 async function getDbForPost(post) {
     const filename = generateFilename(post);
     const filePath = path.join(blogDirectory, filename);
+    console.log(`File path for DB: ${filePath}`); // Log the full file path for the DB
 
-    // Use JSONFilePreset for creating or accessing a JSON file with default data
-
+    // Initialize or access the JSON file database for a specific post
     const db = await JSONFilePreset(filePath, {
         id: post.id,
         title: post.title,
         content: post.content,
         publishedDate: post.publishedDate,
         description: post.description,
-        imageDescription:post.imageDescription,
+        imageDescription: post.imageDescription,
         imagePath: post.imagePath,
         images: [],
         comments: [],
-        tags: [],
+        tags: []
     });
 
-
-
-    // With JSONFilePreset, the explicit db.read() call is not required as it handles initialization
-
+    console.log(`Database initialized for: ${filePath}`); // Confirm DB initialization
     return db;
 }
 
-// Export the getDbForPost function to be used in your application
 export { getDbForPost };
 
