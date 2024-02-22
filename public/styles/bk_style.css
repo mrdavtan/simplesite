@@ -55,11 +55,6 @@ body {
     flex-direction: column;
 }
 
-body {
-    padding-top: 60px; /* Adjust this value based on the actual height of your nav bar */
-}
-
-
 header, footer {
     flex-shrink: 0;
 }
@@ -78,18 +73,13 @@ main > section {
     flex-direction: column;
 }
 
+/* Navigation styles */
 nav {
-    position: fixed; /* Keeps the nav bar fixed at the top of the viewport */
-    top: 0; /* Aligns the nav bar to the top */
-    left: 0; /* Aligns the nav bar to the left */
-    width: 100%; /* Ensures the nav bar extends across the full width of the viewport */
-    background-color: #000000; /* Or any color you prefer */
-    z-index: 1000; /* Ensures the nav bar stays on top of other content */
+    background-color: #000000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: var(--section-padding);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds a shadow for better separation from the page content */
 }
 
 #theme-toggle-container {
@@ -199,30 +189,15 @@ article > h1, article > h2, article > h3 {
     overflow:hidden;
 }
 
-
-
-
 .blog-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Maintains the grid structure with a minimum width for each item */
-    gap: 20px; /* Fixed gap between posts */
-    justify-content: center; /* Centers the grid items horizontally */
-    padding: 20px; /* Padding around the grid */
-    overflow-y: auto; /* Enables vertical scrolling */
-    max-height: 90vh; /* Maximum height of the container before scrolling starts. Adjust as needed */
-    width: 100%; /* Full width of the container */
-    max-width: 2000px; /* Maximum width of the container */
-    margin: 0 auto; /* Centers the container horizontally */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    grid-template-columns: repeat(auto-fill, minmax(400px,400px)); /* Adjust minmax() for your card size */
+    gap: 20px; /* This is the gap between the cards */
+    justify-content: center; /* Center the grid items */
+    padding: 20px; /* Adds padding around the entire grid for larger screens */
+    max-width: 2000px; /* Adjust based on your preference */
+    margin: 0 auto; /* Center the container on the page */
 }
-
-.blog-container::-webkit-scrollbar {
-    display: none; /* Hides scrollbar for Chrome, Safari, and Opera */
-}
-
-
-
 
 .post-card {
   /* Use the --card-size variable for width */
@@ -366,3 +341,5 @@ footer {
     background-color: var(--background-color);
     color: #ffffff;
 }
+
+
