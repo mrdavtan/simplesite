@@ -239,7 +239,7 @@ footer {
 .post-card {
     width: var(--card-size);
     height: var(--card-size);
-
+    overflow: hidden;
     border: .5px solid #454545;
     border-radius: 0px;
     aspect-ratio:1/1;
