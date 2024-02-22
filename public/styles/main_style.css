@@ -211,31 +211,6 @@ footer {
 }
 
 
-
-.slider-wrapper {
-  position: fixed;
-  right: 10px; /* Adjust based on your layout */
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.zoom-slider, .pan-slider {
-  -webkit-appearance: slider-vertical;
-  writing-mode: bt-lr; /* For vertical orientation */
-  height: 200px; /* Adjust as needed */
-  margin-bottom: 20px; /* Space between sliders */
-}
-
-
-.post-card {
-  width: var(--card-size);
-  height: var(--card-size);
-  /* Keep the rest of your styles */
-}
-
 .post-card {
     width: var(--card-size);
     height: var(--card-size);
@@ -260,7 +235,6 @@ footer {
 }
 
 .post-card-content {
-  overflow-y: auto; /* Enables vertical scrolling within the card */
   height: 100%; /* Ensures the content area fills the card */
   padding: 10px; /* Adjust as needed */
 }

@@ -42,15 +42,9 @@
 
             <section id="Latest">
                 <h2>Latest</h2>
-
-
                 <div class="blog-container">
-
-
                     <% posts.forEach(function(post) { %>
-
                     <div class="post-card-content">
-
                          <div class="post-card">
                             <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>" class="post-image">
                             <div class="post-content">
@@ -60,22 +54,9 @@
                         </div>
 
                      </div>
-
-
                     <% }); %>
-
                </div>
-
             </section>
-
-<!-- Slider Wrapper for both Zoom and Pan Sliders -->
-<div class="slider-wrapper">
-  <!-- Vertical Zoom Slider -->
-  <input type="range" min="1" max="3" value="3" class="zoom-slider" id="zoomSlider" orient="vertical">
-
-  <!-- Vertical Pan Slider -->
-  <input type="range" min="1" max="100" value="50" class="pan-slider" id="panSlider" orient="vertical">
-</div>
 
 
             <section id="projects">
@@ -124,27 +105,6 @@
 
     <script src="/scripts/theme-switcher.js"></script>
 
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const zoomSlider = document.getElementById('zoomSlider');
-  const blogContainer = document.querySelector('.blog-container');
-
-  // Adjust blog post size based on zoom slider
-
-zoomSlider.addEventListener('input', function() {
-  const zoomLevel = this.value;
-  // Adjust this logic based on how you want the zoom to affect the card size
-  const newSize = parseInt(zoomLevel) * 100; // Example: Adjust size calculation
-  blogContainer.style.setProperty('--card-size', `${newSize}px`);
-}
-panSlider.addEventListener('input', function() {
-  const maxScroll = blogContainer.scrollHeight - blogContainer.clientHeight;
-  const scrollValue = (this.value / 100) * maxScroll;
-  blogContainer.scrollTop = scrollValue;
-});
-
-</script>
 
 </body>
 </html>
