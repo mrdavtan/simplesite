@@ -19,20 +19,20 @@
     --border-color: #a0a0a0;
     --input-background-color: #ffffff;
     --button-background-color: #007bff;
-    --button-text-color: #ffffff;
+    --button-text-color: #000000;
     --accent-color: #ffcc00; /* Updated accent color */
 }
 
 /* Medium Theme */
 .medium-theme {
-    --background-color: #c2cdd1;
+    --background-color: #a1b8bd;
     --text-color: #000000;
-    --box-background-color: #c2cdd1;
+    --box-background-color: #a1b8bd;
     --border-color: #000000;
-    --input-background-color: #a9a9a9;
+    --input-background-color: #728185;
     --button-background-color: #757575;
     --button-text-color: #ffffff;
-    --accent-color: #ff8c00; /* Updated accent color */
+    --accent-color: #ff4c13; /* Updated accent color */
 }
 
 /* Dark Theme */
