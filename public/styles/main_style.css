@@ -178,18 +178,6 @@ article > h1, article > h2, article > h3 {
     }
 }
 
-/* Box styling for generic container elements */
-/*.box {
-/*    display: flex;
-/*    flex-direction: column;
-/*    align-items: center;
-/*    text-align: center;
-/*    padding: 20px;
-/*    border: var(--border-width) solid var(--border-color);
-/*    border-radius: var(--border-radius);
-/*    flex-grow: 1;
-/*}
-
 /* Styling for blog and footer containers */
 .blog-container, .footer {
     display: grid;
@@ -198,9 +186,6 @@ article > h1, article > h2, article > h3 {
     gap: 0px;
     overflow:hidden;
 }
-
-
-
 
 .blog-container {
     display: grid;
@@ -230,16 +215,16 @@ article > h1, article > h2, article > h3 {
   font-family: 'Space Grotesk', sans-serif;
   height: 400px; /* Adjust height as needed or keep it dynamic */
   overflow: hidden;
-  background-color:#ffffff;
+  background-color: var(--background-color);
   border-radius: 0px;
   aspect-ratio: 1 / 1; /* Maintain aspect ratio, adjust as needed */
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  color: #000000;
+  color: var(--text-color);
 }
 
 .post-image {
     width: 100%;
-    height: 200px; /* Adjust based on your design */
+    height: 300px; /* Adjust based on your design */
     object-fit: cover;
 }
 
