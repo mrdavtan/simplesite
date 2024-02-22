@@ -129,7 +129,8 @@ button#theme-toggle {
 
 
 .hero-img-container {
-    height: 50vh; /* Adjust the height as needed */
+    height: 27vh; /* Adjust the height as needed */
+    overflow: hidden;
     width: 100%; /* This makes the container span the full width of its parent */
     background-size: cover; /* Ensures the background image covers the container */
     background-position: center; /* Centers the background image */
