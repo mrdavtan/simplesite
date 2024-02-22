@@ -18,7 +18,7 @@
     --box-background-color: #f8f8f8;
     --text-color: #000000;
     --accent-color: #ffcc00;
-    --border-color: #a0a0a0;*/
+    --border-color: #ffffff;*/
 }
 
 .medium-theme {
@@ -278,7 +278,7 @@ article > h1, article > h2, article > h3 {
 }
 
 /* For screens smaller than 900px, aim for 2 items per row */
-@media (max-width: 1500px) {
+@media (max-width: 1400px) {
     .blog-container {
         grid-template-columns: repeat(2, minmax(400px, 400px));
     }
