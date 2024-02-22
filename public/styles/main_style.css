@@ -9,7 +9,7 @@
     --text-color: #000000; /* Default text color for readability */
     --accent-color: #ffcc00; /* Default accent color */
     /*--border-color: #a0a0a0; /* Default border color for definition */
-    --card-size: 300px; /* Default size, adjust as needed */
+    --card-size: 400px; /* Default size, adjust as needed */
 }
 
 /* Theme colors */
@@ -18,7 +18,7 @@
     --box-background-color: #f8f8f8;
     --text-color: #000000;
     --accent-color: #ffcc00;
-    /*--border-color: #a0a0a0;*/
+    --border-color: #a0a0a0;*/
 }
 
 .medium-theme {
@@ -44,7 +44,8 @@ html, body {
     padding: 0;
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Orbitron';
+    /*font-family: 'Space Grotesk', sans-serif;*/
     line-height: 1.6;
 }
 
@@ -113,7 +114,7 @@ button#theme-toggle {
 
 
 .about-img-container {
-    height: 30vh; /* Set the height of the container to 25% of the viewport height */
+    height: 60vh; /* Set the height of the container to 25% of the viewport height */
     width: 100%; /* Adjust the width as necessary, or set to 100% to fill the container */
     background-image: url('/img/office.webp'); /* Set the image as a background */
     background-size: cover; /* Cover the container without losing the aspect ratio */
@@ -122,7 +123,7 @@ button#theme-toggle {
 }
 
 #about {
-    height: 30vh; /* Optional: Adjust this value based on how much of the viewport you want the section to cover */
+    height: 60vh; /* Optional: Adjust this value based on how much of the viewport you want the section to cover */
     background-image: url('img/office.webp'); /* Set the background image */
     background-size: cover; /* Ensure the image covers the entire section */
     background-position: center; /* Center the background image */
@@ -131,7 +132,7 @@ button#theme-toggle {
 
 
 .hero-img-container {
-    height: 30vh; /* Adjust the height as needed */
+    height: 60vh; /* Adjust the height as needed */
     overflow: hidden;
     width: 100%; /* This makes the container span the full width of its parent */
     background-size: cover; /* Ensures the background image covers the container */
@@ -151,8 +152,7 @@ section, article {
 
 article > h1, article > h2, article > h3 {
     color: var(--text-color);
-    margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     padding: 0;
 }
 
@@ -162,7 +162,7 @@ footer {
     padding: var(--section-padding);
     border-top: var(--border-width) solid var(--border-color);
     background-color: var(--background-color);
-    color: var(--text-color);
+    color: #ffffff;
 }
 
 /* Responsive design adjustments */
@@ -183,11 +183,9 @@ footer {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 0px;
+    padding: 20px;
     border: var(--border-width) solid var(--border-color);
     border-radius: var(--border-radius);
-    background-color: var(--box-background-color);
-    color: var(--text-color);
     flex-grow: 1;
 }
 
@@ -195,28 +193,32 @@ footer {
 .blog-container, .footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    height: 25vh;
+    height: 40vh;
     gap: 0px;
     overflow:hidden;
 }
 
 .blog-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--card-size), 1fr)); /* Dynamically adjust the number of columns based on the card size */
-  justify-content: center; /* Center the items horizontally */
-  gap: var(--post-card-gap); /* Use the custom property for gap */
-  max-height: 90vh; /* Adjust based on your layout */
-  overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust minmax() for your card size */
+    gap: 20px; /* This is the gap between the cards */
+    justify-content: center; /* Center the grid items */
+    padding: 20px; /* Adds padding around the entire grid for larger screens */
+    max-width: 2000px; /* Adjust based on your preference */
+    margin: 0 auto; /* Center the container on the page */
 }
 
 .post-card {
   /* Use the --card-size variable for width */
-  height: auto; /* Adjust height as needed or keep it dynamic */
+
+  font-family: 'Space Grotesk', sans-serif;
+  height: 400px; /* Adjust height as needed or keep it dynamic */
   overflow: hidden;
-  border: .5px solid #454545;
+  background-color:#ffffff;
   border-radius: 0px;
   aspect-ratio: 1 / 1; /* Maintain aspect ratio, adjust as needed */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  color: #000000;
 }
 
 .post-image {
@@ -245,15 +247,21 @@ footer {
 }
 
 
+@media (min-width: 1024px) {
+    .blog-container {
+        grid-template-columns: repeat(4, 1fr); /* Force 4 columns on larger screens */
+    }
+}
+
 @media (max-width: 768px) {
     .post-card {
-        width: calc(50% - 20px); /* Two cards per row on smaller screens */
+      grid-template-columns: repeat(3, 1fr); /* Force 4 columns on larger screens */
     }
 }
 
 @media (max-width: 480px) {
     .post-card {
-        width: 100%; /* Single column layout on very small screens */
+    grid-template-columns: repeat(2, 1fr); /* Force 4 columns on larger screens */
     }
 }
 
@@ -286,7 +294,7 @@ footer {
     align-items: center;
     text-align: center;
     padding: 20px;
-    background-color: var(--box-background-color);
+    background-color: #00000d;
 }
 <% posts.forEach(function(post) { %>
     <div class="post">
@@ -320,7 +328,7 @@ img {
 footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    background-color: var(--box-background-color);
+    background-color: #000000;
     border-top: 1px solid #ccc;
     text-align: center;
 }
