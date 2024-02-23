@@ -8,7 +8,7 @@
     --box-background-color: #f8f8f8; /* Default box background color for light theme */
     --text-color: #000000; /* Default text color for readability */
     --accent-color: #ffcc00; /* Default accent color */
-    /*--border-color: #a0a0a0; /* Default border color for definition */
+    --border-color: #a0a0a0; /* Default border color for definition */
     --card-size: 400px; /* Default size, adjust as needed */
 }
 
@@ -26,7 +26,7 @@
     --box-background-color: #a1b8bd;
     --text-color: #000000;
     --accent-color: #ff4c13;
-    /*--border-color: #000000;*/
+    --border-color: #000000;*/
 }
 
 .dark-theme {
@@ -34,7 +34,7 @@
     --box-background-color: #252525;
     --text-color: #ffffff;
     --accent-color: #e02e2e;
-    /*--border-color: #454545;*/
+    --border-color: #454545;*/
 }
 
 /* General HTML and Body styles */
@@ -53,9 +53,6 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
-}
-
-body {
     padding-top: 60px; /* Adjust this value based on the actual height of your nav bar */
 }
 
@@ -78,7 +75,19 @@ main > section {
     flex-direction: column;
 }
 
-nav {
+#theme-toggle-container {
+    margin-right: auto;
+}
+
+button#theme-toggle {
+    padding: 10px 20px;
+    background: var(--accent-color);
+    border: none;
+    cursor: pointer;
+}
+
+
+.main-nav {
     position: fixed; /* Keeps the nav bar fixed at the top of the viewport */
     top: 0; /* Aligns the nav bar to the top */
     left: 0; /* Aligns the nav bar to the left */
@@ -92,16 +101,16 @@ nav {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds a shadow for better separation from the page content */
 }
 
-#theme-toggle-container {
+.main-nav #theme-toggle-container {
     margin-right: auto;
 }
 
-#nav-links-container {
+.main-nav #nav-links-container {
     display: flex;
     justify-content: flex-end;
 }
 
-nav ul {
+.main-nav ul {
     list-style-type: none;
     display: flex;
     gap: 20px;
@@ -109,17 +118,10 @@ nav ul {
     margin: 20px;
 }
 
-nav ul li a {
+.main-nav ul li a {
     text-decoration: none;
     color: #ffffff;
     font-weight: 400;
-}
-
-button#theme-toggle {
-    padding: 10px 20px;
-    background: var(--accent-color);
-    border: none;
-    cursor: pointer;
 }
 
 
@@ -153,7 +155,6 @@ button#theme-toggle {
 /* Section and article styles */
 section, article {
     padding: var(--section-padding);
-    /*margin-bottom: 20px*/;
     border-radius: var(--border-radius);
     border: var(--border-width) solid var(--border-color);
     background-color: var(--box-background-color);
@@ -178,6 +179,73 @@ article > h1, article > h2, article > h3 {
     }
 }
 
+
+.content-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    max-width: 2000px;
+    margin: 0 auto;
+    padding: 20px;
+    overflow: hidden;
+    border: var(--border-width) solid var(--border-color); /* Ensure this is set */
+}
+
+.content-header {
+    font-size: 24px; /* Example size */
+    margin-bottom: 20px; /* Space below the header */
+    text-align: left; /* Align the header text to the left */
+}
+
+.content-container nav ul {
+    list-style-type: none; /* Remove bullet points */
+    display: flex; /* Align list items in a row */
+    padding: 0; /* Remove default padding */
+    gap: 20px; /* Space between list items */
+    flex-wrap: wrap; /* Allow items to wrap on small screens */
+}
+
+.content-container nav ul li {
+    margin-bottom: 0; /* Adjusted for inline display */
+}
+
+.content-container nav ul li a {
+    text-decoration: none; /* Remove underline from links */
+    color: var(--text-color); /* Use the variable for text color */
+    font-size: 18px; /* Example size */
+}
+
+.placeholder {
+    height: 0; /* No actual height */
+    visibility: hidden; /* Make invisible */
+}
+
+/* Adjust grid for different screen widths */
+@media (min-width: 1800px) {
+    .content-container {
+        grid-template-columns: repeat(4, minmax(400px, 400px));
+    }
+}
+
+@media (max-width: 1800px) {
+    .content-container {
+        grid-template-columns: repeat(3, minmax(400px, 400px));
+    }
+}
+
+@media (max-width: 1400px) {
+    .content-container {
+        grid-template-columns: repeat(2, minmax(400px, 400px));
+    }
+}
+
+@media (max-width: 1000px) {
+    .content-container {
+        grid-template-columns: repeat(1, minmax(400px, 400px));
+    }
+}
+
+
+
 /* Styling for blog and footer containers */
 .blog-container, .footer {
     display: grid;
@@ -189,10 +257,9 @@ article > h1, article > h2, article > h3 {
 
 .blog-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Maintains the grid structure with a minimum width for each item */
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); /* Maintains the grid structure with a minimum width for each item */
     gap: 20px; /* Fixed gap between posts */
     justify-content: center; /* Centers the grid items horizontally */
-    padding: 20px; /* Padding around the grid */
     overflow-y: auto; /* Enables vertical scrolling */
     max-height: 90vh; /* Maximum height of the container before scrolling starts. Adjust as needed */
     width: 100%; /* Full width of the container */
@@ -206,14 +273,11 @@ article > h1, article > h2, article > h3 {
     display: none; /* Hides scrollbar for Chrome, Safari, and Opera */
 }
 
-
-
-
 .post-card {
   /* Use the --card-size variable for width */
 
   font-family: 'Space Grotesk', sans-serif;
-  height: 400px; /* Adjust height as needed or keep it dynamic */
+  height: 380px; /* Adjust height as needed or keep it dynamic */
   overflow: hidden;
   background-color: var(--background-color);
   border-radius: 0px;

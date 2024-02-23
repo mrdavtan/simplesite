@@ -13,7 +13,7 @@
 </head>
 <body class="light-theme">
     <header>
-      <nav>
+      <nav class="main-nav">
         <div id="theme-toggle-container">
             <button id="theme-toggle">Toggle Theme</button>
         </div>
@@ -37,10 +37,16 @@
                 <!-- Detailed about me/personal journey content goes here -->
             </section>
 
-
+<section class="content-container" id="latest">
+    <h2 class="content-header">Latest</h2>
+    <!-- Your actual content here -->
+    <!-- Placeholder elements for maintaining width -->
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+</section>
 
             <section id="Latest">
-                <h2>Latest</h2>
                 <div class="blog-container">
                     <% posts.forEach(function(post) { %>
                     <div class="post-card-content">
@@ -57,9 +63,17 @@
                </div>
             </section>
 
+<section class="content-container" id="projects">
+    <h2 class="content-header">Projects</h2>
+    <!-- Your actual content here -->
+    <!-- Placeholder elements for maintaining width -->
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+</section>
+
 
             <section id="projects">
-                <h2>Projects</h2>
                 <div class="box">
                     <img src="path/to/image" alt="AI Playground">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
