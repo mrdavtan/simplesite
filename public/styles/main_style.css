@@ -88,17 +88,29 @@ button#theme-toggle {
 
 
 .main-nav {
-    position: fixed; /* Keeps the nav bar fixed at the top of the viewport */
-    top: 0; /* Aligns the nav bar to the top */
-    left: 0; /* Aligns the nav bar to the left */
-    width: 100%; /* Ensures the nav bar extends across the full width of the viewport */
-    background-color: #000000; /* Or any color you prefer */
-    z-index: 1000; /* Ensures the nav bar stays on top of other content */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #000000; /* Adjust as needed */
+    display: flex;
+    justify-content: center; /* Center the nav content container */
+    padding: 0; /* No padding here, it's moved to the inner container */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+}
+
+.main-nav-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--section-padding);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: Adds a shadow for better separation from the page content */
+    width: 100%;
+    max-width: 2000px; /* Matches the blog and content containers */
+    padding: var(--section-padding) 20px; /* Consistent padding with content containers */
+    margin: 0 auto; /* Center within the main-nav */
+
+    border: var(--border-width) solid var(--border-color); /* Ensure this is set */
 }
 
 .main-nav #theme-toggle-container {
@@ -122,6 +134,48 @@ button#theme-toggle {
     text-decoration: none;
     color: #ffffff;
     font-weight: 400;
+}
+
+.hamburger-menu {
+    display: none; /* Hidden by default */
+}
+
+@media (max-width: 1400px) {
+    /* Hide the regular nav links */
+    .main-nav #nav-links-container {
+        display: none;
+    }
+
+    /* Show the hamburger menu */
+    .hamburger-menu {
+        display: block; /* Show hamburger icon */
+        cursor: pointer;
+    }
+}
+
+
+@media (min-width: 1800px) {
+    .main-nav-inner {
+        /* For wider screens, you might want to adjust spacing or the size of the nav items */
+    }
+}
+
+@media (max-width: 1800px) {
+    .main-nav-inner {
+        /* Adjust layout for slightly smaller screens, if necessary */
+    }
+}
+
+@media (max-width: 1400px) {
+    .main-nav-inner {
+        /* This might be a good point to switch to a hamburger menu or adjust spacing */
+    }
+}
+
+@media (max-width: 1000px) {
+    .main-nav-inner {
+        /* Typically, for mobile layouts, ensure navigation is compact or toggled */
+    }
 }
 
 
