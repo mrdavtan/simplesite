@@ -330,6 +330,21 @@ article > h1, article > h2, article > h3 {
 }
 
 
+.blogi-post-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px; /* Adjust based on your design preference */
+    background-color: #f9f9f9; /* Light background for the container */
+    border-radius: 8px; /* Optional: adds rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    overflow: hidden;
+}
+
+
 
 /* Styling for blog and footer containers */
 .blog-container, .footer {

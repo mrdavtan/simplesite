@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Tang</title>
 
-    <link rel="stylesheet" href="./styles/reset_styles.css">
-    <link rel="stylesheet" href="./styles/main_style.css">
+    <link rel="stylesheet" href="/styles/reset_styles.css">
+    <link rel="stylesheet" href="/styles/blogpage.css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
 
 </head>
 <body class="light-theme">
@@ -41,11 +43,39 @@
     <main>
         <section id="home">
 
+<!--<section class="content-container" id="latest">
+<!--    <h2 class="content-header">Latest</h2>
+<!--    <!-- Your actual content here -->
+<!--    <!-- Placeholder elements for maintaining width -->
+<!--    <div class="placeholder"></div>
+<!--    <div class="placeholder"></div>
+<!--    <div class="placeholder"></div>
+<!--</section>
+-->
             <section id="about">
-                    <div class="hero-img-container" style="background-image: url('/img/hero_backgrounds/graph2.gif');" alt="A description of the image"></div>
+                    <div class="blog-post-container" >
 
-                <!-- Detailed about me/personal journey content goes here -->
+
+
+
+
+                    <!--- BLOG POST SHOULD APPEAR HERE -->
+   <article>
+        <h1><%= post.title %></h1>
+        <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>">
+        <p><%= post.content %></p>
+        <!-- Add more post details as needed -->
+    </article>
+
+
+
+
+
+                    </div>
+
             </section>
+
+
 
 <section class="content-container" id="latest">
     <h2 class="content-header">Latest</h2>
@@ -56,56 +86,25 @@
     <div class="placeholder"></div>
 </section>
 
-<section id="Latest">
-    <div class="blog-container">
 
-<% posts.forEach(function(post) { %>
-    <a href="/posts/<%= post.id %>">
-        <div class="post-card-content">
-            <div class="post-card">
-                <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>" class="post-image">
-                <div class="post-content">
-                    <h3 class="post-title"><%= post.title %></h3>
-                    <p class="post-summary"><%= post.description %></p>
-                </div>
-            </div>
-        </div>
-    </a>
-<% }); %>
+            <section id="Latest">
+                <div class="blog-container">
+                    <% posts.forEach(function(post) { %>
+                    <div class="post-card-content">
+                         <div class="post-card">
+                            <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>" class="post-image">
+                            <div class="post-content">
+                                <h3 class="post-title"><%= post.title %></h3>
+                                <p class="post-summary"><%= post.description %></p>
+                            </div>
+                        </div>
 
-
-
-    </div>
-</section>
-
-
-
-<section class="content-container" id="projects">
-    <h2 class="content-header">Projects</h2>
-    <!-- Your actual content here -->
-    <!-- Placeholder elements for maintaining width -->
-    <div class="placeholder"></div>
-    <div class="placeholder"></div>
-    <div class="placeholder"></div>
-</section>
-
-
-            <section id="projects">
-                <div class="box">
-                    <img src="path/to/image" alt="AI Playground">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                </div>
-                <div class="box">
-                    <img src="path/to/image" alt="ROVY">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                </div>
-                <div class="box">
-                    <img src="path/to/image" alt="CitizenSpace">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
-                </div>
+                     </div>
+                    <% }); %>
+               </div>
             </section>
-        </section>
-    </main>
+
+
     <footer>
         <div class="box">
             <div class="footer-section" id="resources">
@@ -135,4 +134,3 @@
 
 </body>
 </html>
-

@@ -37,11 +37,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.ok) {
                 console.log('Post added successfully');
-                document.getElementById('postForm').reset(); // Clear the form after successful submission
+                alert('Post added successfully'); // Simple user feedback
+                document.getElementById('postForm').reset(); // Clear the form
             } else {
                 const responseText = await response.text();
                 console.error('Failed to add post. Server responded with:', responseText);
+                alert(`Failed to add post: ${responseText}`); // Simple error feedback
             }
+
+
+
+
         } catch (error) {
             console.error('Error submitting post:', error);
         }

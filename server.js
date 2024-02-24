@@ -7,6 +7,7 @@ import basicAuth from 'express-basic-auth';
 import OpenAI from 'openai';
 import * as http from 'http';
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 const app = express();
 const PORT = 3001;
@@ -18,15 +19,19 @@ const openai = new OpenAI();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-//const localImagePath = `/img/blog/${imageName}`;
-//const post = {
-//    title,
-//    content,
-//    imageDescription,
-//    imageUrl: localImagePath, // This should be the relative path used in the <img src="">
-//    publishedDate
-//};
-//
+
+import helmet from 'helmet';
+
+app.use(helmet.contentSecurityPolicy({
+    directives: {
+        defaultSrc: ["'self'"], // Allows resources from the same origin
+        imgSrc: ["'self'", "data:"], // Allows images from the same origin and data URLs
+        scriptSrc: ["'self'", "'unsafe-inline'"], // Adjust according to your needs
+        styleSrc: ["'self'", "https:", "'unsafe-inline'"], // Adjust according to your needs
+        // Add or adjust other directives as needed
+    },
+}));
+
 
 
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -61,6 +66,7 @@ app.get('/main', async (req, res) => {
     }
 });
 
+
 app.post('/submit', async (req, res) => {
     console.log('Submit endpoint hit');
     const { title, content, imageDescription } = req.body;
@@ -92,7 +98,11 @@ app.post('/submit', async (req, res) => {
 
             const publishedDate = new Date().toISOString();
 
+            // Generate a unique ID for the post
+            const postId = uuidv4();
+
             const post = {
+                id: postId, // Assign the generated ID to the post
                 title,
                 content,
                 imageDescription,
@@ -117,7 +127,6 @@ app.post('/submit', async (req, res) => {
     }
 });
 
-
 // Function to download and save an image from a URL
 async function downloadImage(imageUrl, imageName) {
   try {
@@ -141,6 +150,67 @@ async function downloadImage(imageUrl, imageName) {
     throw new Error('Failed to download image');
   }
 }
+
+//app.get('/posts/:postId', async (req, res) => {
+//    const postId = req.params.postId;
+//    try {
+//        const post = await findPostById(postId);
+//        if (post) {
+//            res.render('blogpage', { post: post });
+//        } else {
+//            res.status(404).send('Post not found');
+//        }
+//    } catch (error) {
+//        console.error(`Error fetching post details for ID ${postId}:`, error);
+//        res.status(500).send('Error loading post');
+//    }
+//});
+//
+
+async function getOtherPosts(excludePostId) {
+    const allPosts = []; // Fetch all posts. This is just a placeholder. Implement according to your data source.
+    return allPosts.filter(post => post.id !== excludePostId);
+}
+
+
+app.get('/posts/:postId', async (req, res) => {
+    const postId = req.params.postId;
+    try {
+        const post = await findPostById(postId); // Fetch the main post
+        const otherPosts = await getOtherPosts(postId); // Fetch other posts excluding the main post
+        if (post) {
+            // Pass both the main post and other posts to the view
+            res.render('blogpage', { post: post, posts: otherPosts });
+        } else {
+            res.status(404).send('Post not found');
+        }
+    } catch (error) {
+        console.error(`Error fetching post details for ID ${postId}:`, error);
+        res.status(500).send('Error loading post');
+    }
+});
+
+
+
+async function findPostById(postId) {
+    const blogDirectory = path.join(__dirname, 'db', 'blog');
+    try {
+        const postFiles = fs.readdirSync(blogDirectory).filter(file => file.endsWith('.json'));
+        for (let file of postFiles) {
+            const filePath = path.join(blogDirectory, file);
+            const postContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            // Assuming each post JSON has an 'id' property
+            if (postContent.id === postId) {
+                return postContent;
+            }
+        }
+    } catch (error) {
+        console.error(`Failed to find post by ID (${postId}):`, error);
+        return null; // Or throw an error, depending on how you want to handle this case
+    }
+    return null; // Return null if no post matches the given ID
+}
+
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
