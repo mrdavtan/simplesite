@@ -35,11 +35,19 @@
            <section id="about">
                 <!-- Blog post content begins here -->
                 <div class="blog-post-container">
+
                     <article>
-                        <h3><%= post.title %></h3>
-                        <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>">
-                        <p><%= post.content %></p>
+                      <h3><%= post.title %></h3>
+                      <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>">
+                      <!-- Use <%- %> to output the HTML content -->
+                      <div class="post-content"><%- post.content %></div>
                     </article>
+
+<!--                    <article>
+<!--                        <h3><%= post.title %></h3>
+<!--                        <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>">
+<!--                        <p><%= post.content %></p>
+<!--                    </article> -->
                 </div>
                 <!-- Blog post content ends here -->
             </section>

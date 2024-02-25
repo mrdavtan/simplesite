@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Capturing all form inputs
         const title = document.getElementById('title').value;
-        const content = document.getElementById('content').value;
+        //const content = document.getElementById('content').value;
+// Assuming the ID of your textarea is 'content'
+        const content = tinymce.get('content').getContent();
+
         const publishedDate = document.getElementById('publishedDate').value;
         const description = document.getElementById('description').value;
         const keywords = document.getElementById('keywords').value.split(',').map(keyword => keyword.trim());
