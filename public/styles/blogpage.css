@@ -210,33 +210,6 @@ button#theme-toggle {
 
 
 
-.about-img-container {
-    height: 60vh; /* Set the height of the container to 25% of the viewport height */
-    width: 100%; /* Adjust the width as necessary, or set to 100% to fill the container */
-    background-image: url('/img/office.webp'); /* Set the image as a background */
-    background-size: cover; /* Cover the container without losing the aspect ratio */
-    background-position: center; /* Center the background image */
-    overflow: hidden; /* Ensures any part of the image outside the container is not visible */
-}
-
-#about {
-    height: 60vh; /* Optional: Adjust this value based on how much of the viewport you want the section to cover */
-    background-image: url('img/office.webp'); /* Set the background image */
-    background-size: cover; /* Ensure the image covers the entire section */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the background image from repeating */
-}
-
-
-.hero-img-container {
-    height: 60vh; /* Adjust the height as needed */
-    overflow: hidden;
-    width: 100%; /* This makes the container span the full width of its parent */
-    background-size: cover; /* Ensures the background image covers the container */
-    background-position: center; /* Centers the background image */
-}
-
-
 /* Section and article styles */
 section, article {
     padding: var(--section-padding);
@@ -330,22 +303,22 @@ article > h1, article > h2, article > h3 {
 }
 
 /* Styling for blog and footer containers */
-.blog-post-container, .footer {
-    display: grid;
-    grid-template-columns: repeat(3, 0fr);
-    height: 40vh;
+.blog-post-container {
+    height: 80vh;
     gap: 0px;
     overflow:hidden;
 }
 
+
+
 .blog-post-container {
     display: flex;
+    font-family: 'Space Grotesk', sans-serif;
     gap: 20px; /* Fixed gap between posts */
     justify-content: center; /* Centers the grid items horizontally */
     overflow-y: auto; /* Enables vertical scrolling */
     max-height: 90vh; /* Maximum height of the container before scrolling starts. Adjust as needed */
-    width: 100%; /* Full width of the container */
-    max-width: 2000px; /* Maximum width of the container */
+    max-width: 1400px; /* Maximum width of the container */
     margin: 0 auto; /* Centers the container horizontally */
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -354,6 +327,33 @@ article > h1, article > h2, article > h3 {
 .blog-post-container::-webkit-scrollbar {
     display: none; /* Hides scrollbar for Chrome, Safari, and Opera */
 }
+
+.blog-post-container img {
+    width: 100%; /* Ensures image and text take full width of their container */
+    max-height:40vh;
+    object-fit: cover; /* For images, to ensure they cover the area without distorting aspect ratio */
+}
+
+/* Assuming .content-container's breakpoints are as follows */
+@media (max-width: 1800px) {
+    .content-container, .blog-post-container {
+        grid-template-columns: repeat(3, minmax(400px, 1fr));
+    }
+}
+
+@media (max-width: 1400px) {
+    .content-container, .blog-post-container {
+        grid-template-columns: repeat(2, minmax(400px, 1fr));
+    }
+}
+
+@media (max-width: 1000px) {
+    .content-container, .blog-post-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
 
 .post-card {
   /* Use the --card-size variable for width */
@@ -366,6 +366,7 @@ article > h1, article > h2, article > h3 {
   aspect-ratio: 1 / 1; /* Maintain aspect ratio, adjust as needed */
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
   color: var(--text-color);
+
 }
 
 .post-image {
@@ -392,6 +393,9 @@ article > h1, article > h2, article > h3 {
     font-size: 0.9rem;
     color: #666;
 }
+
+
+
 
 
 /* For screens wider than 1200px, aim for 4 items per row */
@@ -464,7 +468,16 @@ article > h1, article > h2, article > h3 {
 }
 
 
+.content-wrap {
+    flex: 1;
+    /* Additional styling as needed */
+}
+
+
+
+
 .footer-section {
+
     display: flex;
     justify-content: space-around; /* Distributes space around items */
     align-items: center; /* Centers items vertically */
@@ -488,6 +501,8 @@ article > h1, article > h2, article > h3 {
         </div>
     </div>
 <% }); %>
+
+
 /* Image styling for responsiveness */
 img {
     width: 100%;
@@ -495,14 +510,33 @@ img {
     margin-bottom: 20px;
 }
 
+.content-wrap {
+    flex: 1;
+}
+
+
+
 footer {
-    display: flex; /* Use flexbox to layout children */
-    justify-content: space-around; /* Distribute space around the child elements */
-    align-items: center; /* Vertically center align the child elements */
-    flex-wrap: wrap; /* Allows items to wrap as needed */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates three columns for the sections */
+    gap: 20px; /* Adjust space between grid items */
     padding: 20px;
-    background-color: #000000; /* Adjust the background color as needed */
-    color: #ffffff; /* Adjust text color as needed */
+    background-color: #000000;
+    color: #ffffff;
+    align-items: center; /* Aligns items vertically center */
+}
+
+.footer-bottom-text {
+    grid-column: 1 / -1; /* Spans the full width of the grid */
+    text-align: center; /* Centers the text */
+    padding-top: 20px; /* Adds space above the copyright text */
+}
+
+/* Adjust grid layout for smaller screens */
+@media (max-width: 768px) {
+    footer {
+        grid-template-columns: 1fr; /* Stacks items in a single column on smaller screens */
+    }
 }
 
 .box {
@@ -514,11 +548,7 @@ footer {
     margin: 10px; /* Optional: Adds some space around each box */
 }
 
-/* Ensure footer content (if they are direct children) are flex items */
-.footer > * {
-    flex: 1; /* Gives each item an equal flex basis */
-    text-align: center; /* Centers the text of each footer item */
-}
+
 
 
 .footer-bottom-text {

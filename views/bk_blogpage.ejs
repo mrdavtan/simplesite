@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David Tang</title>
+
+    <link rel="stylesheet" href="/styles/reset_styles.css">
+    <link rel="stylesheet" href="/styles/blogpage.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+</head>
+<body class="light-theme">
+    <header>
+      <nav class="main-nav">
+        <div class="main-nav-inner">
+        <div class="hamburger-menu">☰</div>
+        <div id="theme-toggle-container">
+            <button id="theme-toggle">Toggle Theme</button>
+        </div>
+        <div id="nav-links-container">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    </header>
+    <main>
+        <section id="home">
+
+<!--<section class="content-container" id="latest">
+<!--    <h2 class="content-header">Latest</h2>
+<!--    <!-- Your actual content here -->
+<!--    <!-- Placeholder elements for maintaining width -->
+<!--    <div class="placeholder"></div>
+<!--    <div class="placeholder"></div>
+<!--    <div class="placeholder"></div>
+<!--</section>
+-->
+            <section id="about">
+                    <div class="blog-post-container" >
+                    <!--- BLOG POST SHOULD APPEAR HERE -->
+   <article>
+        <h1><%= post.title %></h1>
+        <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>">
+        <p><%= post.content %></p>
+        <!-- Add more post details as needed -->
+    </article>
+                    </div>
+            </section>
+<section class="content-container" id="latest">
+    <h2 class="content-header">Latest</h2>
+    <!-- Your actual content here -->
+    <!-- Placeholder elements for maintaining width -->
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+    <div class="placeholder"></div>
+</section>
+
+
+            <section id="Latest">
+                <div class="blog-container">
+                    <% posts.forEach(function(post) { %>
+                    <div class="post-card-content">
+                         <div class="post-card">
+                            <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>" class="post-image">
+                            <div class="post-content">
+                                <h3 class="post-title"><%= post.title %></h3>
+                                <p class="post-summary"><%= post.description %></p>
+                            </div>
+                        </div>
+
+                     </div>
+                    <% }); %>
+               </div>
+            </section>
+    <footer>
+<div class="content-wrap">
+            <div class="footer-section" id="resources">
+                <p>Resources information...</p>
+            </div>
+            <div class="footer-section" id="community">
+                <p>Community information...</p>
+            </div>
+            <div class="footer-section" id="contact">
+                <p>Contact information...</p>
+            </div>
+    <p class="footer-bottom-text">&copy; 2024 David Tang. All Rights Reserved.</p>
+</div>
+    </footer>
+    <script src="/scripts/theme-switcher.js"></script>
+</body>
+</html>
