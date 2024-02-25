@@ -309,6 +309,17 @@ article > h1, article > h2, article > h3 {
     }
 }
 
+
+.blog-post-container h1, .blog-post-container h2, .blog-post-container h3 {
+    /* Styles for headers */
+}
+
+.blog-post-container strong {
+    /* Styles for bold text */
+}
+
+
+
 /* Styling for blog and footer containers */
 .blog-post-container {
     height: 90vh;
