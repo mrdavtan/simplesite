@@ -1,0 +1,86 @@
+/* Heading Styles */
+h1, h2, h3 {
+    color: #333; /* Dark color for emphasis */
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-size: 2em; /* Larger for main titles */
+}
+
+h2 {
+    font-size: 1.5em; /* Subtitles */
+}
+
+h3 {
+    font-size: 1.2em; /* Section headings */
+}
+
+/* Paragraph Styling */
+p {
+    line-height: 1.6; /* Adjust line height for readability */
+    margin-bottom: 1em; /* Space between paragraphs */
+    text-align: justify; /* Optional: justifies the text */
+}
+
+/* List Styling */
+ul, ol {
+    padding-left: 20px; /* Adjust padding for indentation */
+    margin-bottom: 1em;
+}
+
+li {
+    line-height: 1.5; /* Improves readability of list items */
+}
+
+/* Link and Button Styling */
+a {
+    color: #007bff; /* A distinct color */
+    text-decoration: none; /* Removes underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Adds underline on hover for interactivity */
+}
+
+button {
+    background-color: #007bff; /* Button color */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px; /* Rounded corners for buttons */
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Blockquote Styling */
+blockquote {
+    border-left: 4px solid #ccc; /* A left border for emphasis */
+    padding-left: 20px; /* Padding to separate text from the border */
+    margin: 1em 0;
+    color: #555; /* Subtle color */
+    font-style: italic;
+}
+
+/* Code Snippet Styling */
+code {
+    background-color: #f4f4f4; /* Light background */
+    padding: 2px 4px;
+    font-family: monospace;
+    border-radius: 3px;
+}
+
+/* Responsive Text Sizes */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.5em; /* Smaller on mobile */
+    }
+    h2 {
+        font-size: 1.3em;
+    }
+    /* Adjust other elements as needed */
+}
+
