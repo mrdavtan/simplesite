@@ -61,7 +61,6 @@ header, footer {
     flex-shrink: 0;
 }
 
-
 main {
     flex-grow: 1;
     display: flex;
@@ -69,10 +68,13 @@ main {
     justify-content: center;
     align-items: center;
     padding: 1rem; /* Existing padding */
-    margin-left: 4rem;
-    margin-right: 4rem;
+    padding: 2rem; /* Increase to 2rem for more space */
+    background-color: var(--background-color);
 }
 
+main p, main img {
+    padding: 0 2rem; /* Adds horizontal padding */
+}
 
 
 /* Stretching sections within main */
@@ -311,18 +313,16 @@ article > h1, article > h2, article > h3 {
 
 /* Styling for blog and footer containers */
 .blog-post-container {
-    height: 90vh;
+    height: 80vh;
     gap: 0px;
     overflow:hidden;
 }
 
 
-.blog-post-container h3 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    font-weight: bold; /* Makes the title bolder */
-    color: var(--text-color); /* Use the variable for text color */
+.blog-post-container, .content {
+    padding: 4rem; /* Adds padding around the content */
 }
+
 
 .blog-post-container {
     display: flex;
@@ -333,12 +333,10 @@ article > h1, article > h2, article > h3 {
     max-height: 90vh; /* Maximum height of the container before scrolling starts. Adjust as needed */
     max-width: 1400px; /* Maximum width of the container */
     margin: 0 auto; /* Centers the container horizontally */
-    margin-top: 20px;
-    margin-bottom: 20px;
-
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .blog-post-container::-webkit-scrollbar {
@@ -347,9 +345,9 @@ article > h1, article > h2, article > h3 {
 
 .blog-post-container img {
     width: 100%; /* Ensures image and text take full width of their container */
-    max-height:30vh;
+    max-height:40vh;
+    margin-bottom: 20px;
     object-fit: cover; /* For images, to ensure they cover the area without distorting aspect ratio */
-    margin-bottom: 1.5rem;
 }
 
 /* Assuming .content-container's breakpoints are as follows */
@@ -490,6 +488,8 @@ article > h1, article > h2, article > h3 {
     flex: 1;
     /* Additional styling as needed */
 }
+
+
 
 
 .footer-section {

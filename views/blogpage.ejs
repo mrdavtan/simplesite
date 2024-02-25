@@ -6,9 +6,6 @@
     <title>David Tang</title>
     <link rel="stylesheet" href="/styles/reset_styles.css">
     <link rel="stylesheet" href="/styles/blogpage.css">
-
-    <link rel="stylesheet" href="/styles/textblock.css">
-
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -35,48 +32,17 @@
             </nav>
         </header>
         <main>
-            <section id="home">
-                <h2>Welcome to the Blog</h2>
-                <p>This is the introduction to the blog.</p>
-            </section>
-            <section id="about">
+           <section id="about">
                 <!-- Blog post content begins here -->
                 <div class="blog-post-container">
                     <article>
-                        <h1><%= post.title %></h1>
+                        <h3><%= post.title %></h3>
                         <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>">
                         <p><%= post.content %></p>
                     </article>
                 </div>
                 <!-- Blog post content ends here -->
             </section>
-
-
-
-<!--            <section class="content-container" id="latest">
-<!--                <h2>Latest Posts</h2>
-<!--                <!-- Placeholder for latest posts or other content -->
-<!--                <div class="placeholder"></div>
-<!--            </section>
-<!--
-<!--            <section id="Latest">
-<!--                <div class="blog-container">
-<!--                    <% posts.forEach(function(post) { %>
-<!--                    <div class="post-card-content">
-<!--                         <div class="post-card">
-<!--                            <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>" class="post-image">
-<!--                            <div class="post-content">
-<!--                                <h3 class="post-title"><%= post.title %></h3>
-<!--                                <p class="post-summary"><%= post.description %></p>
-<!--                            </div>
-<!--                        </div>
-<!--
-<!--                     </div>
-<!--                    <% }); %>
-<!--               </div>
-<!--            </section>
-<!--
--->
         </main>
     </div>
     <footer>
