@@ -23,12 +23,14 @@
     "axios": "^1.6.7",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-basic-auth": "^1.2.1",
     "helmet": "^7.1.0",
     "lowdb": "^7.0.1",
     "openai": "^4.28.0",
+    "tinymce": "^6.8.3",
     "uuid": "^9.0.1"
   }
 }

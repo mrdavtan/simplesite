@@ -2,75 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Blog</title>
     <link rel="stylesheet" href="/styles/reset_styles.css">
     <link rel="stylesheet" href="/styles/editor.css">
-</head>
 
-    <header>
-      <nav>
-        <div id="theme-toggle-container">
-            <button id="theme-toggle">Toggle Theme</button>
-        </div>
-        <div id="nav-links-container">
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#resources">Resources</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-    </header>
+    <script src="/tinymce/tinymce.min.js"></script>
 
 
+    </head>
+        <header>
+          <nav>
+            <div id="theme-toggle-container">
+                <button id="theme-toggle">Toggle Theme</button>
+            </div>
+            <div id="nav-links-container">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        </header>
+        <body class="light-theme" data-theme="light-theme">
 
-<body class="light-theme" data-theme="light-theme">
+            <main>
+                <div class="form-container">
+                    <form id="postForm">
 
-    <main>
-        <div class="form-container">
-            <form id="postForm">
+                        <div class="row">
+                            <input type="text" id="fillDateTime" readonly value="" class="row-button"></button>
+                            <input type="date" id="publishedDate" placeholder="Published Date">
+                            <input type="time" id="publishTime" name="publishTime" >
+                            <input type="text" id="keywords" placeholder="Keywords" >
+                        </div>
 
-                <div class="row">
-                    <input type="text" id="fillDateTime" readonly value="" class="row-button"></button>
-                    <input type="date" id="publishedDate" placeholder="Published Date">
-                    <input type="time" id="publishTime" name="publishTime" >
-                    <input type="text" id="keywords" placeholder="Keywords" >
+                        <input type="text" id="title" placeholder="Title" required><br>
+
+                        <!-- Add a div with a class 'row' to group these fields -->
+                        <input type="text" id="description" placeholder="Description" ><br>
+
+                        <input type="text" id="imageDescription" placeholder="Image Description" ><br>
+
+                        <textarea id="textarea" name="content" placeholder="Content" ></textarea><br>
+
+                        <button type="submit" id="submitButton" class="row-button">Submit</button>
+                    </form>
                 </div>
+            </main>
 
-                <input type="text" id="title" placeholder="Title" required><br>
+            <footer>
+               <p>&copy; 2024 Your Name. All Rights Reserved.</p>
+            </footer>
 
-                <!-- Add a div with a class 'row' to group these fields -->
-                <input type="text" id="description" placeholder="Description" ><br>
+            <script>
+            document.getElementById('fillDateTime').addEventListener('click', function() {
+                var now = new Date();
+                var date = now.toISOString().substring(0, 10); // Formats the date as YYYY-MM-DD
+                var time = now.toTimeString().substring(0, 5); // Formats the time as HH:MM
 
-                <input type="text" id="imageDescription" placeholder="Image Description" ><br>
+                document.getElementById('publishedDate').value = date;
+                document.getElementById('publishTime').value = time;
+            });
+            </script>
 
-                <textarea id="content" placeholder="Content" ></textarea><br>
+            <script>
+              tinymce.init({
+                selector: '#textarea',
+                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                tinycomments_mode: 'embedded',
+                tinycomments_author: 'Author name',
+                mergetags_list: [
+                  { value: 'First.Name', title: 'First Name' },
+                  { value: 'Email', title: 'Email' },
+                ],
+                ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+              });
+            </script>
 
-                <button type="submit" id="submitButton" class="row-button">Submit</button>
-            </form>
-        </div>
-    </main>
 
-    <footer>
-       <p>&copy; 2024 Your Name. All Rights Reserved.</p>
-    </footer>
-
-    <script>
-    document.getElementById('fillDateTime').addEventListener('click', function() {
-        var now = new Date();
-        var date = now.toISOString().substring(0, 10); // Formats the date as YYYY-MM-DD
-        var time = now.toTimeString().substring(0, 5); // Formats the time as HH:MM
-
-        document.getElementById('publishedDate').value = date;
-        document.getElementById('publishTime').value = time;
-    });
-    </script>
-
-    <script src="/scripts/editor.js"></script> <!-- Make sure the path to your JS file is correct -->
-    <script src="/scripts/theme-switcher.js"></script> <!-- Make sure the path to your JS file is correct -->
-</body>
+            <script src="/scripts/editor.js"></script> <!-- Make sure the path to your JS file is correct -->
+            <script src="/scripts/theme-switcher.js"></script> <!-- Make sure the path to your JS file is correct -->
+        </body>
 </html>
 

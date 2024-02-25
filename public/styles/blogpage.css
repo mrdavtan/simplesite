@@ -347,7 +347,7 @@ article > h1, article > h2, article > h3 {
 
 .blog-post-container img {
     width: 100%; /* Ensures image and text take full width of their container */
-    max-height:30vh;
+    max-height:60vh;
     object-fit: cover; /* For images, to ensure they cover the area without distorting aspect ratio */
     margin-bottom: 1.5rem;
 }

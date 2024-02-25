@@ -9,6 +9,7 @@ import * as http from 'http';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+
 const app = express();
 const PORT = 3001;
 
@@ -28,7 +29,7 @@ app.use(helmet.contentSecurityPolicy({
         imgSrc: ["'self'", "data:"], // Allows images from the same origin and data URLs
         scriptSrc: ["'self'", "'unsafe-inline'"], // Adjust according to your needs
         styleSrc: ["'self'", "https:", "'unsafe-inline'"], // Adjust according to your needs
-        // Add or adjust other directives as needed
+
     },
 }));
 
@@ -38,6 +39,16 @@ app.use(express.json()); // Middleware to parse JSON bodies
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('public')); // Middleware to serve static files from 'public'
+
+// Set the MIME type for JavaScript files
+app.use((req, res, next) => {
+    if (req.url.endsWith('.js')) {
+        res.setHeader('Content-Type', 'application/javascript');
+    }
+    next();
+});
+
+
 
 // Basic Authentication for the /admin route
 const adminAuth = basicAuth({
