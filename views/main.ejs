@@ -63,7 +63,7 @@
     <a href="/posts/<%= post.id %>">
         <div class="post-card-content">
             <div class="post-card">
-                <img src="<%= post.imageUrl %>" alt="<%= post.imageDescription %>" class="post-image">
+                <img src="<%= post.images[0].imageUrl %>" alt="<%= post.images.imageDescription %>" class="post-image">
                 <div class="post-content">
                     <h3 class="post-title"><%= post.title %></h3>
                     <p class="post-summary"><%= post.description %></p>
@@ -72,8 +72,6 @@
         </div>
     </a>
 <% }); %>
-
-
 
     </div>
 </section>

@@ -1,0 +1,52 @@
+{
+    "id": "f4516910-062a-42bd-bd69-4fd8396288df",
+    "title": "Seamlessly Integrating WebSocket Communication in Node.js Applications",
+    "description": "",
+    "publishedDate": "2024-02-25T05:07:01.871Z",
+    "lastUpdatedDate": "",
+    "content": "Hello there! You are an expert full stack AI engineer, and I am looking to debug some code. This is basically part of a script that can take either CLI input or websocket messages. Currently I am trying to figure out why the responses don't come back to the client. Can you help me figure it out?\n\nimport dotenv from 'dotenv';\nimport puppeteer from 'puppeteer-extra';\nimport StealthPlugin from 'puppeteer-extra-plugin-stealth';\nimport OpenAI from 'openai';\nimport readline from 'readline';\nimport fs from 'fs';\nimport { EventEmitter } from 'events';\nimport WebSocket, { WebSocketServer } from 'ws';\n\nconst timeout = 8000;\n\ndotenv.config({ path: './.env' });\npuppeteer.use(StealthPlugin());\n\nconst openai = new OpenAI();\nconst messageEmitter = new EventEmitter();\n\n// Create a WebSocket server\nconst wss = new WebSocketServer({ port: 8080 });\n\n\nwss.on('connection', (ws) => {\n  console.log(`Client connected`);\n\n\n\n  ws.on('message', async (msg) => {\n    console.log(`WebSocket Message Received: ${msg}`);\n    try {\n      const messageData = JSON.parse(msg);\n      if (messageData.command === 'input') {\n        const processedInput = await processInput(messageData.data); // Process the input\n        ws.send(JSON.stringify({ type: 'output', message: processedInput })); // Send response back to client\n      }\n    } catch (error) {\n      console.error('Error:', error);\n      ws.send(JSON.stringify({ type: 'error', message: error.message }));\n    }\n  });\n\n\nasync function input(text) {\n  let thePrompt;\n  let resolvePrompt;\n\n  const promiseCLIInput = () => new Promise((resolve) => {\n    const rl = readline.createInterface({\n      input: process.stdin,\n      output: process.stdout\n    });\n\n    rl.question(text, (prompt) => {\n      rl.close();\n      resolve(prompt);\n    });\n  });\n\n  // Function to setup WebSocket listener\n  const setupWebSocketListener = () => new Promise((resolve) => {\n    resolvePrompt = resolve;\n    messageEmitter.on('newMessage', resolvePrompt);\n  });\n\n  // Loop to continuously listen for CLI input and WebSocket messages\n  while (true) {\n    thePrompt = await Promise.race([promiseCLIInput(), setupWebSocketListener()]);\n\n    if (thePrompt) {\n      // Remove WebSocket listener to prevent it from firing multiple times\n      messageEmitter.off('newMessage', resolvePrompt);\n\n      // Check if thePrompt is from WebSocket, if so, re-setup the listener\n      if (typeof thePrompt === 'string' && thePrompt.startsWith('{')) {\n        setupWebSocketListener();\n      }\n\n      return thePrompt;\n    }\n  }\n}",
+    "author": {
+        "name": "",
+        "bio": "",
+        "profileUrl": ""
+    },
+    "seo": {
+        "metaTitle": "",
+        "metaDescription": "",
+        "focusKeywords": [],
+        "slug": "",
+        "keywords": [],
+        "updateFrequency": "",
+        "contentLength": 0,
+        "pageSpeedScore": 0,
+        "bounceRate": 0,
+        "timeOnPage": 0,
+        "mobileFriendliness": false,
+        "structuredDataImplemented": false
+    },
+    "tags": [],
+    "categories": [],
+    "images": [
+        {
+            "imageUrl": "",
+            "altText": "",
+            "imageTitle": "",
+            "imageDescription": "",
+            "caption": ""
+        }
+    ],
+    "comments": [],
+    "relatedPosts": [],
+    "externalLinks": [],
+    "internalLinks": [],
+    "contentGraph": {
+        "nodes": [],
+        "edges": []
+    },
+    "versioning": {
+        "hash": "",
+        "versionNumber": "",
+        "versionDate": "",
+        "changelog": ""
+    }
+}

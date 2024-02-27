@@ -34,8 +34,6 @@ app.use(helmet.contentSecurityPolicy({
 }));
 
 
-app.use('/img/blog', express.static('public/img/blog'));
-
 
 app.use(express.json()); // Middleware to parse JSON bodies
 app.set('view engine', 'ejs');
@@ -64,29 +62,14 @@ app.get('/admin', adminAuth, (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'editor.html'));
 });
 
-
 app.get('/main', async (req, res) => {
     try {
         const blogDirectory = path.join(__dirname, 'db', 'blog');
         const postFiles = fs.readdirSync(blogDirectory).filter(file => file.endsWith('.json'));
         const posts = postFiles.map(file => {
             const filePath = path.join(blogDirectory, file);
-            const postContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-
-            // Check if the images array exists and has at least one image
-            if (postContent.images && postContent.images.length > 0) {
-                // Add imageUrl and imageDescription from the first image to the post object
-                postContent.imageUrl = postContent.images[0].imageUrl;
-                postContent.imageDescription = postContent.images[0].imageDescription; // Adjust if necessary
-            } else {
-                // Fallback values if no images are found
-                postContent.imageUrl = '/path/to/default/image.png';
-                postContent.imageDescription = 'Default description'; // Adjust if necessary
-            }
-
-            return postContent;
+            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
         });
-
         res.render('main', { posts });
     } catch (error) {
         console.error(`Error fetching posts for /main: ${error}`);
@@ -133,15 +116,8 @@ app.post('/submit', async (req, res) => {
                 id: postId, // Assign the generated ID to the post
                 title,
                 content,
-
-                images: [ // Note that images is now an array of objects
-                    {
-                        imageDescription,
-                        imageUrl: localImagePath,
-                        // You can add more image-related properties here if needed
-                    }
-                ],
-
+                imageDescription,
+                imageUrl: localImagePath,
                 publishedDate
             };
 
@@ -236,7 +212,6 @@ async function findPostById(postId) {
             const postContent = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             // Assuming each post JSON has an 'id' property
             if (postContent.id === postId) {
-                //console.log('Image URL:', postContent.images[0].imageUrl);
                 return postContent;
             }
         }

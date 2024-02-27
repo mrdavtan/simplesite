@@ -1,0 +1,91 @@
+{
+  "id": "unique-content-id",
+  "title": "Title of the Content",
+  "description": "Brief description or synopsis",
+  "publishedDate": "YYYY-MM-DD",
+  "lastUpdatedDate": "YYYY-MM-DDTHH:MM:SSZ",
+  "content": "Full content here...",
+  "author": {
+    "name": "Author Name",
+    "bio": "Short bio of the author",
+    "profileUrl": "URL to author's profile"
+  },
+  "seo": {
+    "metaTitle": "SEO Optimized Title for the Post",
+    "metaDescription": "A concise and keyword-rich description of the post content",
+    "focusKeywords": ["Keyword1", "Keyword2"],
+    "slug": "/seo-friendly-url-slug",
+    "keywords": ["AI", "Corporate Profits", "Humor"],
+    "updateFrequency": "Quarterly",
+    "contentLength": 1500,
+    "pageSpeedScore": 90,
+    "bounceRate": 45,
+    "timeOnPage": 180,
+    "mobileFriendliness": true,
+    "structuredDataImplemented": true
+  },
+  "tags": ["Fiction", "Novel", "Adventure", "AI", "Corporate", "Profits", "Humor"],
+  "categories": ["Category1", "Category2"],
+  "images": [
+    {
+      "imagePath": "/path/to/image.png",
+      "altText": "Descriptive alternative text",
+      "imageTitle": "Image title for SEO",
+      "imageDescription":"Visual Prompt",
+      "caption":"caption"
+    }
+  ],
+  "comments": [
+    {
+      "name": "Commenter Name",
+      "date": "YYYY-MM-DDTHH:MM:SSZ",
+      "comment": "This is a comment text."
+    }
+  ],
+  "relatedPosts": [
+    {
+      "id": "related-post-id",
+      "title": "Related Post Title"
+    }
+  ],
+  "externalLinks": [
+    {
+      "url": "https://example.com",
+      "title": "External Resource Title"
+    }
+  ],
+  "internalLinks": [
+    {
+      "url": "/internal-link-path",
+      "anchorText": "Internal Link"
+    }
+  ],
+  "contentGraph": {
+    "nodes": [
+      {
+        "id": "node1",
+        "type": "text",
+        "content": "Node content for AR/VR visualization."
+      },
+      {
+        "id": "node2",
+        "type": "image",
+        "src": "path/to/image.jpg",
+        "description": "Node image description."
+      }
+    ],
+    "edges": [
+      {
+        "source": "node1",
+        "target": "node2",
+        "relationship": "follows"
+      }
+    ]
+  },
+  "versioning": {
+    "hash": "sha256-generated-hash-value-here",
+    "versionNumber": "1.0.0",
+    "versionDate": "YYYY-MM-DD",
+    "changelog": "Initial release or description of changes in this version."
+  }
+}

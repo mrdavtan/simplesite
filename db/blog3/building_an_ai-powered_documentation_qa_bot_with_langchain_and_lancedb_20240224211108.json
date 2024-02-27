@@ -1,0 +1,52 @@
+{
+    "id": "2a0a2d6b-02ac-46f4-95bf-c93a0c566428",
+    "title": "Building an AI-Powered Documentation Q&A Bot with LangChain and LanceDB",
+    "description": "",
+    "publishedDate": "2024-02-25T05:11:08.666Z",
+    "lastUpdatedDate": "",
+    "content": "can you explain this to me?\n\n\nCode documentation Q&A bot example with LangChain\u00b6\n\nThis Q&A bot will allow you to query your own documentation easily using questions. We'll also demonstrate the use of LangChain and LanceDB using the OpenAI API.\n\nIn this example we'll use Pandas 2.0 documentation, but, this could be replaced for your own docs as well\n\nOpen In Colab\n\nScripts - Python JavaScript\n\n!pip install --quiet openai langchain\n!pip install --quiet -U lancedb\n\nFirst, let's get some setup out of the way. As we're using the OpenAI API, ensure that you've set your key (and organization if needed):\n\nfrom openai import OpenAI\nimport os\n\n# Configuring the environment variable OPENAI_API_KEY\nif \"OPENAI_API_KEY\" not in os.environ:\n    os.environ[\"OPENAI_API_KEY\"] = \"sk-...\"\nclient = OpenAI()\nassert len(client.models.list().data) > 0\n\nLoading in our code documentation, generating embeddings and storing our documents in LanceDB\n\nWe're going to use the power of LangChain to help us create our Q&A bot. It comes with several APIs that can make our development much easier as well as a LanceDB integration for vectorstore.\n\nimport lancedb\nimport re\nimport pickle\nimport requests\nimport zipfile\nfrom pathlib import Path\n\nfrom langchain.document_loaders import UnstructuredHTMLLoader\nfrom langchain.embeddings import OpenAIEmbeddings\nfrom langchain.text_splitter import RecursiveCharacterTextSplitter\nfrom langchain.vectorstores import LanceDB\nfrom langchain.llms import OpenAI\nfrom langchain.chains import RetrievalQA\n\nTo make this easier, we've downloaded Pandas documentation and stored the raw HTML files for you to download. We'll download them and then use LangChain's HTML document readers to parse them and store them in LanceDB as a vector store, along with relevant metadata.\n\npandas_docs = requests.get(\"https://eto-public.s3.us-west-2.amazonaws.com/datasets/pandas_docs/pandas.documentation.zip\")\nwith open('/tmp/pandas.documentation.zip', 'wb') as f:\n    f.write(pandas_docs.content)\n\nfile = zipfile.ZipFile(\"/tmp/pandas.documentation.zip\")\nfile.extractall(path=\"/tmp/pandas_docs\")\n\nWe'll create a simple helper function that can help to extract metadata, so we can use this downstream when we're wanting to query with filters. In this case, we want to keep the lineage of the uri or path for each document that we process:\n\ndef get_document_title(document):\n    m = str(document.metadata[\"source\"])\n    title = re.findall(\"pandas.documentation(.*).html\", m)\n    if title[0] is not None:\n        return(title[0])\n    return ''\n\nPre-processing and loading the documentation\n\nNext, let's pre-process and load the documentation. To make sure we don't need to do this repeatedly if we were updating code, we're caching it using pickle so we can retrieve it again (this could take a few minutes to run the first time you do it). We'll also add some more metadata to the docs here such as the title and version of the code:\n\ndocs_path = Path(\"docs.pkl\")\ndocs = []\n\nif not docs_path.exists():\n    for p in Path(\"/tmp/pandas_docs/pandas.documentation\").rglob(\"*.html\"):\n        print(p)\n        if p.is_dir():\n            continue\n        loader = UnstructuredHTMLLoader(p)\n        raw_document = loader.load()\n        \n        m = {}\n        m[\"title\"] = get_document_title(raw_document[0])\n        m[\"version\"] = \"2.0rc0\"\n        raw_document[0].metadata = raw_document[0].metadata | m\n        raw_document[0].metadata[\"source\"] = str(raw_document[0].metadata[\"source\"])\n        docs = docs + raw_document\n\n    with docs_path.open(\"wb\") as fh:\n        pickle.dump(docs, fh)\nelse:\n    with docs_path.open(\"rb\") as fh:\n        docs = pickle.load(fh)\n\nGenerating embeddings from our docs\n\nNow that we have our raw documents loaded, we need to pre-process them to generate embeddings:\n\ntext_splitter = RecursiveCharacterTextSplitter(\n    chunk_size=1000,\n    chunk_overlap=200,\n)\ndocuments = text_splitter.split_documents(docs)\nembeddings = OpenAIEmbeddings()\n\nStoring and querying with LanceDB\n\nLet's connect to LanceDB so we can store our documents. We'll create a Table to store them in:\n\ndb = lancedb.connect('/tmp/lancedb')\ntable = db.create_table(\"pandas_docs\", data=[\n    {\"vector\": embeddings.embed_query(\"Hello World\"), \"text\": \"Hello World\", \"id\": \"1\"}\n], mode=\"overwrite\")\ndocsearch = LanceDB.from_documents(documents, embeddings, connection=table)\n\nNow let's create our RetrievalQA chain using the LanceDB vector store:\n\nqa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type=\"stuff\", retriever=docsearch.as_retriever())\n\nAnd that's it! We're all set up. The next step is to run some queries, let's try a few:\n\nquery = \"What are the major differences in pandas 2.0?\"\nqa.run(query)\n\n' The major differences in pandas 2.0 include installing optional dependencies with pip extras, the ability to use any numpy numeric dtype in an Index, and enhancements, notable bug fixes, backwards incompatible API changes, deprecations, and performance improvements.'\n\nquery = \"What's the current version of pandas?\"\nqa.run(query)\n\n' 2.0.0rc0'\n\nquery = \"How do I make use of installing optional dependencies?\"\nqa.run(query)\n\n' Optional dependencies can be installed with pip install \"pandas[all]\" or \"pandas[performance]\". This will install all recommended performance dependencies such as numexpr, bottleneck and numba.'\n\nquery = \"What are the backwards incompatible API changes in Pandas 2.0?\"\nqa.run(query)\n\n\" \\n\\nPandas 2.0 includes a number of API breaking changes, such as increased minimum versions for dependencies, the use of os.linesep for DataFrame.to_csv's line_terminator, and reorganization of the library. See the release notes for a full list of changes.\"\n\nChatGPT\n\nThis explanation describes the process of creating a Q&A bot that can query documentation using LangChain and LanceDB, integrated with the OpenAI API. The example uses the Pandas 2.0 documentation, but it can be adapted for any documentation. Here's a breakdown of the steps involved:\n1. Initial Setup\n\n    Installation: The script begins by installing necessary Python packages: openai, langchain, and lancedb.\n    OpenAI API Configuration: It sets up the OpenAI API key in the environment variables and initializes the OpenAI client.\n\n2. Loading Documentation\n\n    Downloading Documentation: The Pandas documentation is downloaded as a zip file and extracted.\n    Metadata Extraction: A helper function (get_document_title) is created to extract metadata from the documentation files.\n\n3. Pre-processing and Loading Documentation\n\n    Document Processing: The documentation is pre-processed and loaded. If it's the first run, the documentation is processed and saved using pickle for faster retrieval in future runs.\n    Metadata Addition: Additional metadata like the title and version is added to the documents.\n\n4. Generating Embeddings\n\n    Document Splitting: The RecursiveCharacterTextSplitter is used to split the documents into smaller chunks.\n    Embedding Generation: The OpenAIEmbeddings class is used to generate embeddings for these chunks.\n\n5. Storing and Querying with LanceDB\n\n    LanceDB Setup: LanceDB is set up to store the documents and their embeddings.\n    Table Creation: A table is created in LanceDB to store the documents.\n    Document Indexing: The documents are indexed in LanceDB using their embeddings.\n\n6. Creating the Q&A Bot\n\n    RetrievalQA Chain: A RetrievalQA chain is created using LangChain, which uses the LanceDB vector store for retrieving relevant documentation segments based on queries.\n    Querying: The Q&A bot is now ready to answer queries about the documentation. Example queries are provided to demonstrate its functionality.\n\nKey Components\n\n    LangChain: A library that simplifies the creation of language model-based applications.\n    LanceDB: A vector database used for efficient storage and retrieval of high-dimensional data like embeddings.\n    OpenAI API: Used for generating embeddings and querying language models.\n\nUse Case\n\nThis setup is particularly useful for developers or users who need to query large sets of documentation efficiently. By converting the documentation into searchable embeddings and storing them in LanceDB, the Q&A bot can quickly retrieve relevant information in response to user queries.",
+    "author": {
+        "name": "",
+        "bio": "",
+        "profileUrl": ""
+    },
+    "seo": {
+        "metaTitle": "",
+        "metaDescription": "",
+        "focusKeywords": [],
+        "slug": "",
+        "keywords": [],
+        "updateFrequency": "",
+        "contentLength": 0,
+        "pageSpeedScore": 0,
+        "bounceRate": 0,
+        "timeOnPage": 0,
+        "mobileFriendliness": false,
+        "structuredDataImplemented": false
+    },
+    "tags": [],
+    "categories": [],
+    "images": [
+        {
+            "imageUrl": "",
+            "altText": "",
+            "imageTitle": "",
+            "imageDescription": "",
+            "caption": ""
+        }
+    ],
+    "comments": [],
+    "relatedPosts": [],
+    "externalLinks": [],
+    "internalLinks": [],
+    "contentGraph": {
+        "nodes": [],
+        "edges": []
+    },
+    "versioning": {
+        "hash": "",
+        "versionNumber": "",
+        "versionDate": "",
+        "changelog": ""
+    }
+}

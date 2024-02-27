@@ -1,7 +1,52 @@
 {
-  "title": "Why now is an usually good time to get back into front end: AI + HTMX",
-  "content": "With a background in 3d for the automotive, working on web 2D for personal projects and later for an autonomous delivery startup, I always found the difficulty of doing simple things in 2D baffling. \n\nFrom the early days of html, css, jquery, bootstrap, each project was just as frustrating as the first over the years. New things became fashionable for 2 minutes, then left the scene, never to be heard from again.\n\nMuch like my experience working in the auto industry, each new framework that appeared brought out in me skepticism and apprehension before deciding to jump in and testing the waters.\n\nSomeone posed a question on quora years ago along the lines of: Why do people prefer working on backend vs frontend. \n\nThe answer was, imagine going on a trip from SF to LA. One of them is in a [enter luxury vehicle here], and the other is on an old bicycle with crowds jeering and heckling you while throwing things at you the entire way.\n\nThere is a new cool kid in town. It's HTMX. I've spent a bit of time on it and after staying out of the front end scene, and now with my best friend ChatGPT4 and other LLMs, my enthusiasm to build things is coming back.\n\nFor those less familiar with HTMX, here is a lengthy description to my short question:\n\nYou\nare you familiar with htmx?\nChatGPT\n\nYes, I'm familiar with htmx. It's a modern, JavaScript library that enables you to access AJAX, CSS Transitions, WebSockets, and Server-Sent Events directly in HTML, without writing any JavaScript. This approach simplifies the process of adding dynamic behavior to your web pages, making it easier to create responsive, fast, and user-friendly web applications.\n\nHere's a brief overview of how htmx can be integrated and utilized in a full-stack development project, especially in AI-driven web applications:\n\n    Seamless Integration with Backend Services: htmx can easily interact with backend services, making it suitable for AI-driven web applications where the frontend needs to dynamically display data processed by AI algorithms. For instance, you could use htmx attributes to fetch and render the results of an AI model's predictions without needing to reload the page.\n\n    Simplifying Dynamic Content Loading: Through attributes like hx-get, hx-post, hx-put, etc., htmx allows you to make asynchronous requests to server-side resources. This is particularly useful in AI applications where you might need to fetch updated data or results from AI computations without interrupting the user's interaction with the application.\n\n    Real-time Interactions: With support for WebSockets and Server-Sent Events, htmx can facilitate real-time data updates on the webpage. This feature can be leveraged in applications requiring real-time AI data processing feedback, such as monitoring dashboards for AI-driven analytics.\n\n    Progressive Enhancement: htmx follows the principle of progressive enhancement, allowing you to build web applications that are functional with basic HTML when JavaScript is disabled or not supported, and progressively enhance the functionality and interactivity as more features are supported. This approach ensures broader accessibility and improves the user experience.\n\n    Easy Integration with Existing Stack: Since htmx works with your existing server-side frameworks (e.g., Django, Flask, Node.js) without demanding major architectural changes, integrating AI features into your web application becomes more straightforward. You can focus on the AI model's deployment and optimization on the server side and use htmx to interact with these models dynamically.\n\n    Frontend Simplification: By moving complexity to the server and keeping the frontend simpler, htmx allows developers to concentrate on optimizing AI algorithms and ensuring their seamless integration into web applications. This simplification can result in faster development cycles and easier maintenance.\n\nIn conclusion, htmx is a powerful tool for full-stack AI web developers looking to enhance the interactivity and responsiveness of web applications without the overhead of complex JavaScript frameworks. Its simplicity and focus on enhancing HTML directly align well with modern web development practices, making it an excellent choice for projects that require fast, efficient, and scalable integration of AI functionalities.\n\n\n\n",
-  "imageDescription": "A lady with many suitors and she wants to pick one to join her on a bicycle ride. Each suitor is a robot dressed in a suit. A few of them are huge. Each robot represents a front end framework. The large robots are React and Angular. The small one is  HTMX.. She is looking at HTMX.",
-  "imageUrl": "/img/blog/why_now_is_an_usually_good_time_to_get_back_into_front_end_ai__htmx_20240221_102334.png",
-  "publishedDate": "2024-02-21T18:23:35.356Z"
+    "id": "9bbe2148-08fd-4caf-a509-fb1f3ff7e234",
+    "title": "Why now is an usually good time to get back into front end: AI + HTMX",
+    "description": "",
+    "publishedDate": "2024-02-21T18:23:35.356Z",
+    "lastUpdatedDate": "",
+    "content": "With a background in 3d for the automotive, working on web 2D for personal projects and later for an autonomous delivery startup, I always found the difficulty of doing simple things in 2D baffling. \n\nFrom the early days of html, css, jquery, bootstrap, each project was just as frustrating as the first over the years. New things became fashionable for 2 minutes, then left the scene, never to be heard from again.\n\nMuch like my experience working in the auto industry, each new framework that appeared brought out in me skepticism and apprehension before deciding to jump in and testing the waters.\n\nSomeone posed a question on quora years ago along the lines of: Why do people prefer working on backend vs frontend. \n\nThe answer was, imagine going on a trip from SF to LA. One of them is in a [enter luxury vehicle here], and the other is on an old bicycle with crowds jeering and heckling you while throwing things at you the entire way.\n\nThere is a new cool kid in town. It's HTMX. I've spent a bit of time on it and after staying out of the front end scene, and now with my best friend ChatGPT4 and other LLMs, my enthusiasm to build things is coming back.\n\nFor those less familiar with HTMX, here is a lengthy description to my short question:\n\nYou\nare you familiar with htmx?\nChatGPT\n\nYes, I'm familiar with htmx. It's a modern, JavaScript library that enables you to access AJAX, CSS Transitions, WebSockets, and Server-Sent Events directly in HTML, without writing any JavaScript. This approach simplifies the process of adding dynamic behavior to your web pages, making it easier to create responsive, fast, and user-friendly web applications.\n\nHere's a brief overview of how htmx can be integrated and utilized in a full-stack development project, especially in AI-driven web applications:\n\n    Seamless Integration with Backend Services: htmx can easily interact with backend services, making it suitable for AI-driven web applications where the frontend needs to dynamically display data processed by AI algorithms. For instance, you could use htmx attributes to fetch and render the results of an AI model's predictions without needing to reload the page.\n\n    Simplifying Dynamic Content Loading: Through attributes like hx-get, hx-post, hx-put, etc., htmx allows you to make asynchronous requests to server-side resources. This is particularly useful in AI applications where you might need to fetch updated data or results from AI computations without interrupting the user's interaction with the application.\n\n    Real-time Interactions: With support for WebSockets and Server-Sent Events, htmx can facilitate real-time data updates on the webpage. This feature can be leveraged in applications requiring real-time AI data processing feedback, such as monitoring dashboards for AI-driven analytics.\n\n    Progressive Enhancement: htmx follows the principle of progressive enhancement, allowing you to build web applications that are functional with basic HTML when JavaScript is disabled or not supported, and progressively enhance the functionality and interactivity as more features are supported. This approach ensures broader accessibility and improves the user experience.\n\n    Easy Integration with Existing Stack: Since htmx works with your existing server-side frameworks (e.g., Django, Flask, Node.js) without demanding major architectural changes, integrating AI features into your web application becomes more straightforward. You can focus on the AI model's deployment and optimization on the server side and use htmx to interact with these models dynamically.\n\n    Frontend Simplification: By moving complexity to the server and keeping the frontend simpler, htmx allows developers to concentrate on optimizing AI algorithms and ensuring their seamless integration into web applications. This simplification can result in faster development cycles and easier maintenance.\n\nIn conclusion, htmx is a powerful tool for full-stack AI web developers looking to enhance the interactivity and responsiveness of web applications without the overhead of complex JavaScript frameworks. Its simplicity and focus on enhancing HTML directly align well with modern web development practices, making it an excellent choice for projects that require fast, efficient, and scalable integration of AI functionalities.\n\n\n\n",
+    "author": {
+        "name": "",
+        "bio": "",
+        "profileUrl": ""
+    },
+    "seo": {
+        "metaTitle": "",
+        "metaDescription": "",
+        "focusKeywords": [],
+        "slug": "",
+        "keywords": [],
+        "updateFrequency": "",
+        "contentLength": 0,
+        "pageSpeedScore": 0,
+        "bounceRate": 0,
+        "timeOnPage": 0,
+        "mobileFriendliness": false,
+        "structuredDataImplemented": false
+    },
+    "tags": [],
+    "categories": [],
+    "images": [
+        {
+            "imageUrl": "",
+            "altText": "",
+            "imageTitle": "",
+            "imageDescription": "",
+            "caption": ""
+        }
+    ],
+    "comments": [],
+    "relatedPosts": [],
+    "externalLinks": [],
+    "internalLinks": [],
+    "contentGraph": {
+        "nodes": [],
+        "edges": []
+    },
+    "versioning": {
+        "hash": "",
+        "versionNumber": "",
+        "versionDate": "",
+        "changelog": ""
+    }
 }

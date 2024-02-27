@@ -56,7 +56,7 @@ async function getDbForPost(post) {
         publishedDate: post.publishedDate,
         description: post.description,
         imageDescription: post.imageDescription,
-        imageUrl: post.imageUrl,
+        imagePath: post.imagePath,
         images: [],
         comments: [],
         tags: []
